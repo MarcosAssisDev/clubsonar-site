@@ -7,8 +7,8 @@ window.SONAR_CONFIG = {
   niches: {
     pet: {
       groupName: "Sonar Pet #101",
-      // AGUARDANDO USUÁRIO: colar aqui o link de convite do grupo (https://chat.whatsapp.com/...)
-      groupUrl: ""
+      // Link oficial do grupo. Se o grupo mudar, troque so esta linha.
+      groupUrl: "https://chat.whatsapp.com/EWmhSfdhhT06imZ0Y5zDYD"
     }
   },
   // Opcionais — preencher quando existirem. IDs de pixel/GA são públicos por natureza.
