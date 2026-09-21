@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Club Sonar · Ofertas Pet</title>
+<meta name="description" content="Ofertas, achados e oportunidades para quem cuida de pets. Entre no grupo Sonar Pet.">
+<meta property="og:title" content="Club Sonar · Ofertas Pet">
+<meta property="og:description" content="Receba as melhores oportunidades pet no nosso grupo.">
+<meta name="theme-color" content="#0f766e">
+<style>
+  :root { --bg:#f6f7f4; --card:#fff; --ink:#1c2321; --muted:#5b6662; --brand:#0f766e; --cta:#16a34a; --cta-ink:#fff; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#121716; --card:#1b2220; --ink:#eef2f0; --muted:#a3b0ab; } }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+         background:var(--bg); color:var(--ink); font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { width:100%; max-width:420px; background:var(--card); border-radius:20px; padding:32px 24px; text-align:center;
+         box-shadow:0 10px 30px rgba(0,0,0,.08); }
+  .brand { letter-spacing:.18em; font-weight:700; font-size:13px; color:var(--brand); }
+  .paw { font-size:48px; margin:12px 0 4px; }
+  h1 { font-size:28px; margin:0 0 12px; }
+  p { color:var(--muted); margin:0 0 12px; }
+  ul { text-align:left; color:var(--muted); padding-left:20px; margin:16px 0 24px; }
+  .cta { display:block; width:100%; padding:16px; border-radius:14px; background:var(--cta); color:var(--cta-ink);
+         font-weight:700; font-size:18px; text-decoration:none; border:0; cursor:pointer; }
+  .cta[aria-disabled="true"] { opacity:.5; pointer-events:none; }
+  small { display:block; margin-top:16px; color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">CLUB SONAR</div>
+  <div class="paw" aria-hidden="true">🐾</div>
+  <h1>Ofertas Pet</h1>
+  <p>Ofertas, achados e oportunidades para quem cuida de pets.</p>
+  <ul>
+    <li>Promoções selecionadas todos os dias</li>
+    <li>Ração, petiscos, brinquedos e acessórios</li>
+    <li>Grátis — saia quando quiser</li>
+  </ul>
+  <a id="cta" class="cta" href="#" rel="noopener">ENTRAR NO GRUPO</a>
+  <small>Grupo de ofertas no WhatsApp · Não pedimos seus dados.<br>Como afiliados, podemos receber comissão por compras feitas pelos links.</small>
+</main>
+<script src="/config.js"></script>
+<script src="/tracking.js"></script>
+<script>
+  (function () {
+    var cfg = window.SONAR_CONFIG, niche = cfg.niches.pet, btn = document.getElementById("cta");
+    if (!cfg.campaignTypes.GROUP_ACQUISITION.enabled || !niche.groupUrl) {
+      btn.setAttribute("aria-disabled", "true"); btn.textContent = "Em breve"; return;
+    }
+    btn.href = niche.groupUrl;
+    btn.addEventListener("click", function () {
+      window.SonarTrack.track("group_join_click", { group: niche.groupName, niche: "pet" });
+    });
+  })();
+</script>
+</body>
+</html>
