@@ -21,7 +21,7 @@
   // Cabeçalho
   var header = el("header", { "class": "site-header" }), wrap = el("div", { "class": "wrap" });
   var logo = el("a", { "class": "logo", href: "/", "aria-label": "Club Sonar — início" });
-  logo.appendChild(el("span", { "class": "logo-dot", "aria-hidden": "true" }));
+  logo.appendChild(el("img", { src: "/assets/img/icon-64.png", alt: "", width: "30", height: "30" }));
   logo.appendChild(document.createTextNode("CLUB SONAR"));
   var btn = el("button", { "class": "menu-btn", type: "button", "aria-expanded": "false", "aria-controls": "site-menu" }, "☰ Grupos");
   var menu = el("nav", { "class": "menu", id: "site-menu", "aria-label": "Grupos" });
