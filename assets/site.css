@@ -105,3 +105,8 @@ section.block h2 { font-size:20px; margin:0 0 12px; }
 .site-footer { border-top:1px solid var(--line); margin-top:32px; padding:24px 0 40px; color:var(--muted); font-size:13px; text-align:center; }
 .site-footer nav { display:flex; flex-wrap:wrap; gap:4px 16px; justify-content:center; margin-bottom:8px; font-size:14px; }
 .site-footer nav a { display:inline-flex; align-items:center; min-height:48px; font-weight:600; text-decoration:none; }
+
+/* Prova: prints reais do grupo, rolagem lateral */
+.proofs { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; }
+.proofs img { flex:none; width:220px; height:auto; border-radius:14px; scroll-snap-align:start; box-shadow:var(--shadow); background:#202c33; }
+.note { font-size:13px; color:var(--muted); margin:4px 0 0; }

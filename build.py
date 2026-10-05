@@ -78,6 +78,10 @@ def footer(niche=None, links=True):
         contact.append(f'Instagram <a href="https://instagram.com/{E(ig)}" rel="noopener">@{E(ig)}</a>')
     if email:
         contact.append(f'<a href="mailto:{E(email)}">{E(email)}</a>')
+    phone = SITE["contact"].get("phone")
+    if phone:
+        digits = "".join(ch for ch in phone if ch.isdigit())
+        contact.append(f'<a href="tel:+55{digits}">{E(phone)}</a>')
     stores = ", ".join(SITE["stores"])
     nav = " ".join(([f'<a href="/">Início</a>'] + [f'<a href="/{n["key"]}">{E(n["title"])}</a>' for n in NICHES] if links else [])
                    + ['<a href="/privacidade">Política de Privacidade</a>'])
@@ -127,6 +131,19 @@ def niche_page(n):
     top = LOGO if n.get("heroLogo") else f'<div class="icon" aria-hidden="true">{n["emoji"]}</div>'
     perks = "\n".join(f'      <li><span class="p-icon" aria-hidden="true">{i}</span><div><strong>{E(h)}</strong><span>{E(t)}</span></div></li>'
                       for i, h, t in p["perks"])
+    proofs = n.get("proofs") or []
+    proof_html = ""
+    if proofs:
+        imgs = "\n".join(f'      <img src="{x["src"]}" alt="{E(x["alt"])}" width="{x["width"]}" height="{x["height"]}" loading="lazy" decoding="async">' for x in proofs)
+        proof_html = f"""
+  <section class="block">
+    <h2>Ofertas reais do grupo</h2>
+    <div class="proofs" tabindex="0" aria-label="Prints de ofertas postadas no grupo (role para o lado)">
+{imgs}
+    </div>
+    <p class="note">Prints de ofertas postadas no grupo {E(n["groupName"])}. Preços da data do post; podem ter mudado.</p>
+  </section>
+"""
     faq_html = "\n".join(f"    <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
     return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema)
             + header(f"/{key}", SITE.get("menuOnNichePages", True))
@@ -140,7 +157,7 @@ def niche_page(n):
     <p class="reassure">Grátis, sem spam, saia quando quiser.</p>
     {badges(p["badges"])}
   </div>
-
+{proof_html}
   <section class="block">
     <h2>Como funciona</h2>
     <ol class="steps card">

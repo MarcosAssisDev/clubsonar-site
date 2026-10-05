@@ -2,10 +2,26 @@
   "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js).",
   "domain": "https://clubsonar.com.br",
   "siteName": "Club Sonar",
-  "contact": { "email": "", "instagram": "sonar_pet" },
-  "stores": ["Mercado Livre", "Amazon", "Shopee", "TikTok Shop"],
+  "contact": {
+    "email": "marcos.assis.sonar@gmail.com",
+    "phone": "(14) 99162-8848",
+    "instagram": ""
+  },
+  "stores": [
+    "Mercado Livre",
+    "Amazon",
+    "Shopee",
+    "TikTok Shop"
+  ],
   "menuOnNichePages": false,
-  "campaignTypes": { "GROUP_ACQUISITION": { "enabled": true }, "PRODUCT_PROMOTION": { "enabled": false } },
+  "campaignTypes": {
+    "GROUP_ACQUISITION": {
+      "enabled": true
+    },
+    "PRODUCT_PROMOTION": {
+      "enabled": false
+    }
+  },
   "metaPixelId": "",
   "ga4Id": "",
   "niches": [
@@ -20,20 +36,42 @@
       "heroLogo": true,
       "title": "Ofertas Gerais",
       "description": "As melhores promoções do dia em eletrônicos, casa, moda, beleza e mais.",
-      "badges": ["⏳ Vagas limitadas", "🎟️ Cupons exclusivos"],
+      "badges": [
+        "⏳ Vagas limitadas",
+        "🏷️ Descontos do dia"
+      ],
       "page": {
         "title": "Grupo de Ofertas no WhatsApp · Sonar Ofertas",
         "description": "Entre no grupo de ofertas Sonar Ofertas no WhatsApp: promoções do dia e cupons em eletrônicos, casa, moda e beleza. Grátis, sem spam.",
         "ogDescription": "Promoções do dia e cupons direto no seu WhatsApp. Grátis, sem spam.",
         "h1": "Receba as <span class=\"hl\">melhores ofertas do dia</span> no seu WhatsApp",
         "lead": "Garimpamos promoções nas maiores lojas e mandamos só o que vale a pena.",
-        "badges": ["⏳ Vagas limitadas", "🎟️ Cupons exclusivos", "✅ 100% grátis"],
-        "perks": [
-          ["💸", "Preço baixo de verdade", "Ofertas checadas antes de chegar até você."],
-          ["🎟️", "Cupons de desconto", "Códigos que nem sempre aparecem no site da loja."],
-          ["🔕", "Sem spam", "Só ofertas, nada de corrente ou propaganda aleatória."]
+        "badges": [
+          "⏳ Vagas limitadas",
+          "🏷️ Descontos do dia",
+          "✅ 100% grátis"
         ],
-        "faqTopic": ["Que tipo de oferta vocês mandam?", "Eletrônicos, casa, cozinha, moda, beleza e itens do dia a dia, sempre de lojas conhecidas."],
+        "perks": [
+          [
+            "💸",
+            "Preço baixo de verdade",
+            "Ofertas checadas antes de chegar até você."
+          ],
+          [
+            "🏷️",
+            "Cupons quando aparecem",
+            "Se a loja liberar um cupom, ele vai junto com a oferta."
+          ],
+          [
+            "🔕",
+            "Sem spam",
+            "Só ofertas, nada de corrente ou propaganda aleatória."
+          ]
+        ],
+        "faqTopic": [
+          "Que tipo de oferta vocês mandam?",
+          "Eletrônicos, casa, cozinha, moda, beleza e itens do dia a dia, sempre de lojas conhecidas."
+        ],
         "final": "Entre agora e comece a economizar."
       }
     },
@@ -48,22 +86,70 @@
       "heroLogo": false,
       "title": "Ofertas Pet",
       "description": "Ração, petiscos, brinquedos e acessórios com desconto para quem cuida de pets.",
-      "badges": ["⏳ Vagas limitadas", "🦴 Achados do dia"],
+      "badges": [
+        "⏳ Vagas limitadas",
+        "🦴 Achados do dia"
+      ],
       "page": {
         "title": "Grupo de Ofertas Pet no WhatsApp · Sonar Pet Ofertas",
         "description": "Ofertas de ração, petiscos, brinquedos e acessórios para pets no WhatsApp. Entre grátis no grupo Sonar Pet. Sem spam, saia quando quiser.",
         "ogDescription": "Ração, petiscos e acessórios com desconto direto no seu WhatsApp.",
         "h1": "Ofertas para o seu pet, <span class=\"hl\">direto no WhatsApp</span>",
         "lead": "Ração, petiscos, brinquedos e acessórios com desconto, garimpados todos os dias para quem cuida de cães e gatos.",
-        "badges": ["⏳ Vagas limitadas", "🦴 Achados do dia", "✅ 100% grátis"],
-        "perks": [
-          ["🥣", "Ração mais barata", "Acompanhamos os preços das marcas que você já usa."],
-          ["🧸", "Brinquedos e acessórios", "Caminhas, coleiras, arranhadores e mais com desconto."],
-          ["🔕", "Sem spam", "Só ofertas pet, nada de corrente ou propaganda aleatória."]
+        "badges": [
+          "⏳ Vagas limitadas",
+          "🦴 Achados do dia",
+          "✅ 100% grátis"
         ],
-        "faqTopic": ["As ofertas são para cães e gatos?", "Sim, e também para outros pets quando aparece uma boa promoção."],
+        "perks": [
+          [
+            "🥣",
+            "Ração mais barata",
+            "Acompanhamos os preços das marcas que você já usa."
+          ],
+          [
+            "🧸",
+            "Brinquedos e acessórios",
+            "Caminhas, coleiras, arranhadores e mais com desconto."
+          ],
+          [
+            "🔕",
+            "Sem spam",
+            "Só ofertas pet, nada de corrente ou propaganda aleatória."
+          ]
+        ],
+        "faqTopic": [
+          "As ofertas são para cães e gatos?",
+          "Sim, e também para outros pets quando aparece uma boa promoção."
+        ],
         "final": "Seu pet agradece. Entre agora."
-      }
+      },
+      "proofs": [
+        {
+          "src": "/assets/img/provas/pet-dispensador.webp",
+          "alt": "Print de oferta no grupo — Brinquedo dispensador de petisco: de R$ 59,90 por R$ 29,90 (50% OFF)",
+          "width": 240,
+          "height": 280
+        },
+        {
+          "src": "/assets/img/provas/pet-cercado.webp",
+          "alt": "Print de oferta no grupo — Cercado dobrável para cães: de R$ 139,99 por R$ 81,47 (41% OFF)",
+          "width": 240,
+          "height": 399
+        },
+        {
+          "src": "/assets/img/provas/pet-shampoo.webp",
+          "alt": "Print de oferta no grupo — Kit shampoo e condicionador Up Clean: de R$ 34,90 por R$ 25,00 (28% OFF)",
+          "width": 240,
+          "height": 546
+        },
+        {
+          "src": "/assets/img/provas/pet-mordedor.webp",
+          "alt": "Print de oferta no grupo — Mordedor de madeira para cachorro: de R$ 36,00 por R$ 30,34 (15% OFF)",
+          "width": 240,
+          "height": 459
+        }
+      ]
     }
   ]
 }
