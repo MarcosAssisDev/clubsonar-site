@@ -33,5 +33,21 @@
   }
 
   window.SonarTrack = { track: track, utm: utm };
-  track("page_view_ponte");
+  track("page_view");
+
+  // cta_click: todo botão com data-cta (posição em data-position, variante A/B em data-variant)
+  document.addEventListener("click", function (ev) {
+    var a = ev.target.closest && ev.target.closest("[data-cta]");
+    if (!a) return;
+    var niche = a.getAttribute("data-niche"), n = (C.niches || {})[niche] || {};
+    track("cta_click", { niche: niche, group: n.groupName, position: a.getAttribute("data-position"), variant: a.getAttribute("data-variant") || "A" });
+  });
+
+  // scroll_50: uma vez por página
+  var scrolled = false;
+  window.addEventListener("scroll", function () {
+    if (scrolled) return;
+    var h = document.documentElement;
+    if ((h.scrollTop + window.innerHeight) / h.scrollHeight >= 0.5) { scrolled = true; track("scroll_50"); }
+  }, { passive: true });
 })();
