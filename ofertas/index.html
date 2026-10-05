@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grupo de Ofertas no WhatsApp · Club Sonar</title>
+<meta name="description" content="Entre no grupo de ofertas do Club Sonar no WhatsApp: promoções do dia e cupons exclusivos em eletrônicos, casa, moda e beleza. Grátis, vagas limitadas.">
+<link rel="canonical" href="https://clubsonar.com.br/ofertas">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clubsonar.com.br/ofertas">
+<meta property="og:title" content="Grupo de Ofertas no WhatsApp · Club Sonar">
+<meta property="og:description" content="Promoções do dia e cupons exclusivos direto no seu WhatsApp. Vagas limitadas.">
+<meta name="theme-color" content="#0f766e">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Grupo de Ofertas no WhatsApp · Club Sonar","url":"https://clubsonar.com.br/ofertas","inLanguage":"pt-BR","description":"Grupo de ofertas no WhatsApp com promoções do dia e cupons exclusivos.","isPartOf":{"@type":"WebSite","name":"Club Sonar","url":"https://clubsonar.com.br/"}}
+</script>
+<style>
+  :root { --bg:#f6f7f4; --card:#fff; --ink:#1c2321; --muted:#5b6662; --brand:#0f766e; --cta:#16a34a; --cta-ink:#fff; --hot:#dc2626; --hot-bg:#fee2e2; --gift:#92400e; --gift-bg:#fef3c7; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#121716; --card:#1b2220; --ink:#eef2f0; --muted:#a3b0ab; --hot:#fca5a5; --hot-bg:#3b1515; --gift:#fcd34d; --gift-bg:#3a2a0c; } }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+         background:var(--bg); color:var(--ink); font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { width:100%; max-width:420px; background:var(--card); border-radius:20px; padding:32px 24px; text-align:center;
+         box-shadow:0 10px 30px rgba(0,0,0,.08); }
+  .brand { letter-spacing:.18em; font-weight:700; font-size:13px; color:var(--brand); text-decoration:none; }
+  .icon { font-size:48px; margin:12px 0 4px; }
+  h1 { font-size:28px; margin:0 0 12px; }
+  p { color:var(--muted); margin:0 0 12px; }
+  ul { text-align:left; color:var(--muted); padding-left:20px; margin:16px 0 20px; }
+  .badges { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:0 0 12px; }
+  .badge { font-size:13px; font-weight:700; padding:4px 10px; border-radius:999px; }
+  .badge.hot { color:var(--hot); background:var(--hot-bg); }
+  .badge.gift { color:var(--gift); background:var(--gift-bg); }
+  .cta { display:block; width:100%; padding:16px; border-radius:14px; background:var(--cta); color:var(--cta-ink);
+         font-weight:700; font-size:18px; text-decoration:none; border:0; cursor:pointer; }
+  .cta[aria-disabled="true"] { opacity:.5; pointer-events:none; }
+  .urgency { margin:10px 0 0; font-size:14px; font-weight:600; color:var(--hot); }
+  small { display:block; margin-top:16px; color:var(--muted); font-size:12px; }
+  small a { color:var(--brand); }
+</style>
+</head>
+<body>
+<main>
+  <a class="brand" href="/">CLUB SONAR</a>
+  <div class="icon" aria-hidden="true">🔥</div>
+  <h1>Grupo de Ofertas</h1>
+  <p>As melhores promoções do dia, garimpadas nas maiores lojas e entregues direto no seu WhatsApp.</p>
+  <div class="badges">
+    <span class="badge hot">⏳ Vagas limitadas</span>
+    <span class="badge gift">🎟️ Cupons exclusivos</span>
+  </div>
+  <ul>
+    <li>Eletrônicos, casa, moda, beleza e mais</li>
+    <li>Só ofertas checadas, sem spam</li>
+    <li>Grátis — saia quando quiser</li>
+  </ul>
+  <a id="cta" class="cta" href="#" rel="noopener">QUERO ENTRAR NO GRUPO</a>
+  <p class="urgency">Os grupos têm limite de participantes. Garanta sua vaga.</p>
+  <small>Grupo de ofertas no WhatsApp · Não pedimos seus dados.<br>Como afiliados, podemos receber comissão por compras feitas pelos links.<br><a href="/">Ver todos os grupos</a></small>
+</main>
+<script src="/config.js"></script>
+<script src="/tracking.js"></script>
+<script>
+  (function () {
+    var cfg = window.SONAR_CONFIG, niche = cfg.niches.ofertas, btn = document.getElementById("cta");
+    if (!cfg.campaignTypes.GROUP_ACQUISITION.enabled || !niche.active || !niche.groupUrl) {
+      btn.setAttribute("aria-disabled", "true"); btn.textContent = "Em breve"; return;
+    }
+    btn.href = niche.groupUrl;
+    btn.addEventListener("click", function () {
+      window.SonarTrack.track("group_join_click", { group: niche.groupName, niche: "ofertas" });
+    });
+  })();
+</script>
+</body>
+</html>
