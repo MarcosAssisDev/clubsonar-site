@@ -161,7 +161,15 @@
           "width": 247,
           "height": 472
         }
-      ]
+      ],
+      "video": {
+        "src": "/assets/video/pet-tutor-esperto.mp4",
+        "poster": "/assets/video/pet-tutor-esperto.webp",
+        "width": 720,
+        "height": 900,
+        "label": "Vídeo com achados reais do grupo Sonar Pet: brinquedos, colete, cercadinho e biscoito com desconto",
+        "note": "Achados reais do grupo, com preços vistos em 22/09. Os preços mudam."
+      }
     }
   ]
 }

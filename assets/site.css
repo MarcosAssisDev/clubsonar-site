@@ -118,3 +118,4 @@ section.block h2 { font-size:20px; margin:0 0 12px; }
 .note { font-size:13px; color:var(--muted); margin:4px 0 0; }
 .hero-logo.square { padding:0; overflow:hidden; border-radius:24px; }
 .hero-logo.square img { width:160px; max-width:45vw; }
+.proof-video { display:block; width:100%; max-width:400px; height:auto; margin:0 auto; border-radius:20px; box-shadow:var(--shadow); background:#1b3b62; }
