@@ -93,6 +93,7 @@ def footer(niche=None, links=True):
         contact.append(f'<a href="tel:+55{digits}">{E(phone)}</a>')
     stores = ", ".join(SITE["stores"])
     nav = " ".join(([f'<a href="/">Início</a>'] + [f'<a href="/{n["key"]}">{E(n["title"])}</a>' for n in NICHES] if links else [])
+                   + ([] if links else ['<a href="/">Ver outros grupos de ofertas</a>'])
                    + ['<a href="/privacidade">Política de Privacidade</a>'])
     return f"""<footer class="site-footer"><div class="wrap">
   <nav aria-label="Rodapé">{nav}</nav>
@@ -149,13 +150,17 @@ def niche_page(n):
     proofs = n.get("proofs") or []
     proof_html = ""
     if proofs:
-        imgs = "\n".join(f'      <img src="{x["src"]}" alt="{E(x["alt"])}" width="{x["width"]}" height="{x["height"]}" loading="lazy" decoding="async">' for x in proofs)
+        total = len(proofs)
+        imgs = "\n".join(
+            f'      <figure class="slide"><img src="{x["src"]}" alt="{E(x["alt"])}" width="{x["width"]}" height="{x["height"]}" loading="lazy" decoding="async">'
+            f'<figcaption>{i} de {total}</figcaption></figure>' for i, x in enumerate(proofs, 1))
         proof_html = f"""
   <section class="block">
     <h2>Ofertas reais do grupo</h2>
-    <div class="proofs" tabindex="0" aria-label="Prints de ofertas postadas no grupo (role para o lado)">
+    <div class="proofs" tabindex="0" aria-label="Prints de ofertas postadas no grupo (deslize para o lado)">
 {imgs}
     </div>
+    <p class="swipe-hint" aria-hidden="true">Deslize para o lado para ver mais ofertas →</p>
     <p class="note">Prints de ofertas postadas no grupo {E(n["groupName"])}. Preços da data do post; podem ter mudado.</p>
   </section>
 """
