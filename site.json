@@ -1,5 +1,5 @@
 {
-  "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js).",
+  "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js). Para mostrar os prints de um nicho de novo, renomeie proofsHidden para proofs.",
   "domain": "https://clubsonar.com.br",
   "siteName": "Club Sonar",
   "contact": {
@@ -125,7 +125,13 @@
         ],
         "final": "Seu pet agradece. Entre agora."
       },
-      "proofs": [
+      "logo": {
+        "hero": "/assets/img/pet/logo.webp",
+        "icon": "/assets/img/pet/icon-64.png",
+        "og": "/assets/img/pet/og.jpg",
+        "headerName": "SONAR PET"
+      },
+      "proofsHidden": [
         {
           "src": "/assets/img/provas/pet-dispensador.webp",
           "alt": "Print de oferta no grupo — Brinquedo dispensador de petisco: de R$ 59,90 por R$ 29,90 (50% OFF)",
@@ -156,13 +162,7 @@
           "width": 247,
           "height": 472
         }
-      ],
-      "logo": {
-        "hero": "/assets/img/pet/logo.webp",
-        "icon": "/assets/img/pet/icon-64.png",
-        "og": "/assets/img/pet/og.jpg",
-        "headerName": "SONAR PET"
-      }
+      ]
     }
   ]
 }
