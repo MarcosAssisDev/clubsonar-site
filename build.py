@@ -164,6 +164,20 @@ def niche_page(n):
     <p class="note">Prints de ofertas postadas no grupo {E(n["groupName"])}. Preços da data do post; podem ter mudado.</p>
   </section>
 """
+    video = n.get("video")
+    if video:
+        # Vídeo mudo em loop no lugar dos prints; sem som, o navegador permite tocar sozinho.
+        proof_html = f"""
+  <section class="block">
+    <h2>Achados reais do grupo</h2>
+    <video class="proof-video" poster="{video["poster"]}" width="{video["width"]}" height="{video["height"]}"
+           autoplay muted loop playsinline preload="metadata" aria-label="{E(video["label"])}">
+      <source src="{video["src"]}" type="video/mp4">
+      <source src="{video["src"].replace(".mp4", ".webm")}" type="video/webm">
+    </video>
+    <p class="note">{E(video["note"])}</p>
+  </section>
+"""
     faq_html = "\n".join(f"    <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
     return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"))
             + header(f"/{key}", SITE.get("menuOnNichePages", True),
