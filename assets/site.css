@@ -1,0 +1,104 @@
+/* Estilo compartilhado de todas as páginas do Club Sonar. */
+:root {
+  --bg:#f4f6f3; --card:#fff; --ink:#14201d; --muted:#5b6662; --line:#e3e8e5;
+  --brand:#0f766e; --brand-2:#14b8a6; --brand-ink:#fff;
+  --cta:#16a34a; --cta-2:#22c55e; --cta-ink:#fff;
+  --hot:#dc2626; --hot-bg:#fee2e2; --gift:#92400e; --gift-bg:#fef3c7; --info:#0f766e; --info-bg:#ccfbf1;
+  --shadow:0 10px 30px rgba(15,40,35,.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#0e1413; --card:#18201e; --ink:#eef2f0; --muted:#a3b0ab; --line:#26302d;
+          --hot:#fca5a5; --hot-bg:#3b1515; --gift:#fcd34d; --gift-bg:#3a2a0c; --info:#5eead4; --info-bg:#123430;
+          --shadow:0 10px 30px rgba(0,0,0,.35); }
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+a { color:var(--brand); }
+.wrap { width:100%; max-width:520px; margin:0 auto; padding:0 16px; }
+
+/* Cabeçalho e menu */
+.site-header { position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--bg) 88%, transparent);
+               backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+.site-header .wrap { display:flex; align-items:center; justify-content:space-between; height:56px; }
+.logo { display:flex; align-items:center; gap:8px; font-weight:800; letter-spacing:.14em; font-size:14px; color:var(--brand); text-decoration:none; }
+.logo-dot { width:22px; height:22px; border-radius:50%; background:radial-gradient(circle at 50% 50%, var(--brand-2) 0 30%, transparent 31%),
+            radial-gradient(circle at 50% 50%, transparent 0 48%, var(--brand) 49% 60%, transparent 61%); border:2px solid var(--brand); }
+.menu-btn { display:flex; align-items:center; gap:6px; padding:8px 12px; border-radius:999px; border:1px solid var(--line);
+            background:var(--card); color:var(--ink); font:600 14px/1 inherit; font-family:inherit; cursor:pointer; }
+.menu { position:absolute; right:16px; top:60px; min-width:240px; background:var(--card); border:1px solid var(--line);
+        border-radius:16px; box-shadow:var(--shadow); padding:8px; display:none; }
+.menu.open { display:block; }
+.menu a { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; color:var(--ink); text-decoration:none; font-weight:600; }
+.menu a:hover, .menu a[aria-current="page"] { background:var(--bg); }
+.menu hr { border:0; border-top:1px solid var(--line); margin:6px 4px; }
+.site-header .wrap { position:relative; }
+
+/* Hero */
+.hero { text-align:center; padding:32px 0 8px; }
+.hero .icon { font-size:56px; line-height:1; margin-bottom:8px; }
+.eyebrow { display:inline-block; font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+           color:var(--info); background:var(--info-bg); padding:4px 10px; border-radius:999px; margin-bottom:12px; }
+h1 { font-size:clamp(28px, 7vw, 36px); line-height:1.15; margin:0 0 12px; letter-spacing:-.01em; }
+h1 .hl { background:linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.lead { color:var(--muted); margin:0 auto 16px; max-width:440px; }
+
+/* Selos */
+.badges { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:0 0 16px; }
+.badge { font-size:13px; font-weight:700; padding:5px 11px; border-radius:999px; color:var(--gift); background:var(--gift-bg); }
+.badge.hot { color:var(--hot); background:var(--hot-bg); }
+.badge.info { color:var(--info); background:var(--info-bg); }
+
+/* Botões */
+.cta { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:16px; border-radius:16px;
+       background:linear-gradient(180deg, var(--cta-2), var(--cta)); color:var(--cta-ink); font-weight:800; font-size:18px;
+       text-decoration:none; border:0; cursor:pointer; box-shadow:0 8px 20px rgba(22,163,74,.35); transition:transform .15s; }
+.cta:hover { transform:translateY(-1px); }
+.cta[aria-disabled="true"] { opacity:.5; pointer-events:none; box-shadow:none; }
+.cta.pulse { animation:pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { box-shadow:0 8px 20px rgba(22,163,74,.35), 0 0 0 0 rgba(34,197,94,.45); }
+                   50% { box-shadow:0 8px 20px rgba(22,163,74,.35), 0 0 0 10px rgba(34,197,94,0); } }
+@media (prefers-reduced-motion: reduce) { .cta.pulse { animation:none; } html { scroll-behavior:auto; } }
+.wa { width:22px; height:22px; flex:none; }
+.urgency { text-align:center; margin:10px 0 0; font-size:14px; font-weight:600; color:var(--hot); }
+.reassure { text-align:center; margin:8px 0 0; font-size:13px; color:var(--muted); }
+
+/* Seções e cards */
+section.block { margin:28px 0; }
+section.block > h2 { font-size:20px; margin:0 0 12px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; box-shadow:var(--shadow); }
+.perks { display:grid; gap:10px; list-style:none; padding:0; margin:0; }
+.perks li { display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; }
+.perks .p-icon { font-size:22px; line-height:1.2; }
+.perks strong { display:block; }
+.perks span { color:var(--muted); font-size:14px; }
+.steps { counter-reset:s; display:grid; gap:10px; list-style:none; padding:0; margin:0; }
+.steps li { counter-increment:s; display:flex; gap:12px; align-items:center; }
+.steps li::before { content:counter(s); flex:none; width:32px; height:32px; border-radius:50%; display:grid; place-items:center;
+                    background:var(--brand); color:var(--brand-ink); font-weight:800; }
+.stores { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+.stores span { padding:6px 12px; border-radius:999px; border:1px solid var(--line); background:var(--card); font-weight:600; font-size:14px; }
+
+/* Lista de grupos (home) */
+.groups { display:grid; gap:16px; }
+.group { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; box-shadow:var(--shadow); }
+.group-head { display:flex; gap:12px; align-items:center; margin-bottom:8px; }
+.group-icon { width:52px; height:52px; flex:none; border-radius:14px; display:grid; place-items:center; font-size:28px;
+              background:linear-gradient(135deg, var(--info-bg), var(--gift-bg)); }
+.group h2 { font-size:19px; margin:0; }
+.group h2 a { color:inherit; text-decoration:none; }
+.group p { color:var(--muted); margin:0 0 12px; }
+.group .badges { justify-content:flex-start; }
+.group .cta { font-size:16px; padding:14px; }
+.group .more { display:block; text-align:center; margin-top:10px; font-size:14px; font-weight:600; }
+
+/* FAQ */
+details { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:8px; }
+summary { font-weight:700; cursor:pointer; }
+details p { color:var(--muted); margin:8px 0 0; }
+
+/* Rodapé */
+.site-footer { border-top:1px solid var(--line); margin-top:32px; padding:24px 0 40px; color:var(--muted); font-size:12px; text-align:center; }
+.site-footer nav { display:flex; flex-wrap:wrap; gap:6px 14px; justify-content:center; margin-bottom:12px; font-size:14px; }
+.site-footer a { font-weight:600; text-decoration:none; }
+.steps.card { padding:20px; }

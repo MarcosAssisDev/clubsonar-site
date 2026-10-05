@@ -15,7 +15,7 @@ window.SONAR_CONFIG = {
       emoji: "🔥",
       title: "Ofertas Gerais",
       description: "As melhores promoções do dia em eletrônicos, casa, moda, beleza e mais.",
-      badges: ["Vagas limitadas", "Cupons exclusivos"]
+      badges: ["⏳ Vagas limitadas", "🎟️ Cupons exclusivos"]
     },
     pet: {
       active: true,
@@ -26,7 +26,7 @@ window.SONAR_CONFIG = {
       emoji: "🐾",
       title: "Ofertas Pet",
       description: "Ração, petiscos, brinquedos e acessórios com desconto para quem cuida de pets.",
-      badges: ["Vagas limitadas", "Achados do dia"]
+      badges: ["⏳ Vagas limitadas", "🦴 Achados do dia"]
     }
   },
   // Opcionais — preencher quando existirem. IDs de pixel/GA são públicos por natureza.

@@ -11,46 +11,45 @@
 <meta property="og:title" content="Club Sonar · Grupos de Ofertas no WhatsApp">
 <meta property="og:description" content="Promoções do dia e cupons exclusivos direto no seu WhatsApp.">
 <meta name="theme-color" content="#0f766e">
+<link rel="stylesheet" href="/assets/site.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Club Sonar","url":"https://clubsonar.com.br/","inLanguage":"pt-BR","description":"Grupos de ofertas e cupons no WhatsApp."}
 </script>
-<style>
-  :root { --bg:#f6f7f4; --card:#fff; --ink:#1c2321; --muted:#5b6662; --brand:#0f766e; --cta:#16a34a; --cta-ink:#fff; --hot:#dc2626; --hot-bg:#fee2e2; --gift:#92400e; --gift-bg:#fef3c7; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#121716; --card:#1b2220; --ink:#eef2f0; --muted:#a3b0ab; --hot:#fca5a5; --hot-bg:#3b1515; --gift:#fcd34d; --gift-bg:#3a2a0c; } }
-  * { box-sizing:border-box; }
-  body { margin:0; min-height:100vh; padding:32px 16px; background:var(--bg); color:var(--ink);
-         font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-  main { width:100%; max-width:480px; margin:0 auto; text-align:center; }
-  .brand { letter-spacing:.18em; font-weight:700; font-size:13px; color:var(--brand); }
-  h1 { font-size:28px; margin:8px 0 8px; }
-  .lead { color:var(--muted); margin:0 0 24px; }
-  .groups { display:grid; gap:16px; }
-  .group { background:var(--card); border-radius:20px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.08); text-align:left; }
-  .group h2 { font-size:20px; margin:0 0 6px; display:flex; align-items:center; gap:8px; }
-  .group h2 a { color:inherit; text-decoration:none; }
-  .group p { color:var(--muted); margin:0 0 12px; }
-  .badges { display:flex; gap:8px; flex-wrap:wrap; margin:0 0 16px; }
-  .badge { font-size:13px; font-weight:700; padding:4px 10px; border-radius:999px; color:var(--gift); background:var(--gift-bg); }
-  .badge.hot { color:var(--hot); background:var(--hot-bg); }
-  .cta { display:block; width:100%; padding:14px; border-radius:14px; background:var(--cta); color:var(--cta-ink);
-         font-weight:700; font-size:17px; text-decoration:none; text-align:center; }
-  small { display:block; margin-top:24px; color:var(--muted); font-size:12px; }
-</style>
 </head>
 <body>
-<main>
-  <div class="brand">CLUB SONAR</div>
-  <h1>Grupos de ofertas no WhatsApp</h1>
-  <p class="lead">Promoções do dia, cupons exclusivos e achados selecionados. Escolha seu grupo e entre grátis.</p>
-  <div id="groups" class="groups">
-    <!-- Fallback sem JavaScript; com JS a lista é montada a partir do config.js -->
-    <section class="group"><h2>🔥 <a href="/ofertas">Ofertas Gerais</a></h2><p>As melhores promoções do dia.</p><a class="cta" href="/ofertas">ENTRAR NO GRUPO</a></section>
-    <section class="group"><h2>🐾 <a href="/pet">Ofertas Pet</a></h2><p>Achados para quem cuida de pets.</p><a class="cta" href="/pet">ENTRAR NO GRUPO</a></section>
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Grupos gratuitos no WhatsApp</div>
+    <h1>As melhores ofertas do dia, <span class="hl">direto no seu WhatsApp</span>.</h1>
+    <p class="lead">Promoções garimpadas nas maiores lojas e cupons exclusivos. Escolha o grupo com a sua cara e entre grátis.</p>
+    <div class="badges">
+      <span class="badge hot">⏳ Vagas limitadas</span>
+      <span class="badge info">✅ 100% grátis</span>
+      <span class="badge">🔒 Sem cadastro</span>
+    </div>
   </div>
-  <small>Grupos de ofertas no WhatsApp · Não pedimos seus dados.<br>Como afiliados, podemos receber comissão por compras feitas pelos links.</small>
+
+  <section class="block" aria-labelledby="grupos-titulo">
+    <h2 id="grupos-titulo">Escolha seu grupo</h2>
+    <div id="groups" class="groups">
+      <!-- Fallback sem JavaScript; com JS a lista é montada a partir do config.js -->
+      <div class="group"><h2>🔥 <a href="/ofertas">Ofertas Gerais</a></h2><p>As melhores promoções do dia.</p><a class="cta" href="/ofertas">ENTRAR NO GRUPO</a></div>
+      <div class="group"><h2>🐾 <a href="/pet">Ofertas Pet</a></h2><p>Achados para quem cuida de pets.</p><a class="cta" href="/pet">ENTRAR NO GRUPO</a></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Por que entrar</h2>
+    <ul class="perks">
+      <li><span class="p-icon" aria-hidden="true">💸</span><div><strong>Ofertas checadas</strong><span>Só mandamos o que vale a pena.</span></div></li>
+      <li><span class="p-icon" aria-hidden="true">⚡</span><div><strong>Você vê primeiro</strong><span>Promoções relâmpago acabam rápido.</span></div></li>
+      <li><span class="p-icon" aria-hidden="true">🔒</span><div><strong>Sem cadastro</strong><span>Entra pelo próprio WhatsApp e sai quando quiser.</span></div></li>
+    </ul>
+  </section>
 </main>
 <script src="/config.js"></script>
 <script src="/tracking.js"></script>
+<script src="/assets/layout.js"></script>
 <script>
   (function () {
     var cfg = window.SONAR_CONFIG, list = document.getElementById("groups");
@@ -60,27 +59,31 @@
     Object.keys(cfg.niches).forEach(function (key) {
       var n = cfg.niches[key];
       if (!n.active) return;
-      var card = el("section", "group"), h2 = el("h2"), link = el("a", null, n.title);
-      link.href = n.path || "/" + key;
-      h2.appendChild(document.createTextNode(n.emoji || "")); h2.appendChild(link);
-      card.appendChild(h2);
+      var path = n.path || "/" + key;
+      var card = el("article", "group"), head = el("div", "group-head"), h2 = el("h2"), link = el("a", null, n.title);
+      link.href = path;
+      head.appendChild(el("div", "group-icon", n.emoji || "💬"));
+      h2.appendChild(link); head.appendChild(h2);
+      card.appendChild(head);
       card.appendChild(el("p", null, n.description));
       var badges = el("div", "badges");
       (n.badges || []).forEach(function (b) {
         var hot = /vaga/i.test(b);
-        badges.appendChild(el("span", hot ? "badge hot" : "badge", (hot ? "⏳ " : "🎟️ ") + b));
+        badges.appendChild(el("span", hot ? "badge hot" : "badge", b));
       });
       card.appendChild(badges);
-      var btn = el("a", "cta", "ENTRAR NO GRUPO");
+      var btn = el("a", "cta", "💬 ENTRAR NO GRUPO");
       if (enabled && n.groupUrl) {
         btn.href = n.groupUrl; btn.rel = "noopener";
         btn.addEventListener("click", function () {
           window.SonarTrack.track("group_join_click", { group: n.groupName, niche: key, from: "home" });
         });
       } else {
-        btn.href = link.href;
+        btn.href = path;
       }
       card.appendChild(btn);
+      var more = el("a", "more", "Saiba mais sobre o grupo →"); more.href = path;
+      card.appendChild(more);
       list.appendChild(card);
     });
   })();
