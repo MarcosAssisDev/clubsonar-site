@@ -21,7 +21,7 @@ E = html.escape
 CUR = ' aria-current="page"'
 
 
-def head(title, desc, path, og_desc=None, extra=""):
+def head(title, desc, path, og_desc=None, extra="", og_image="/assets/img/og.jpg"):
     url = DOMAIN + path
     return f"""<!doctype html>
 <html lang="pt-BR">
@@ -35,7 +35,7 @@ def head(title, desc, path, og_desc=None, extra=""):
 <meta property="og:url" content="{url}">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(og_desc or desc)}">
-<meta property="og:image" content="{DOMAIN}/assets/img/og.jpg">
+<meta property="og:image" content="{DOMAIN}{og_image}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +53,7 @@ def ld(obj):
     return '<script type="application/ld+json">\n' + json.dumps(obj, ensure_ascii=False) + "\n</script>\n"
 
 
-def header(current, menu=True):
+def header(current, menu=True, icon="/assets/img/icon-64.png", name="CLUB SONAR"):
     """Topo: marca pequena; o menu de grupos é <details>, sem JavaScript."""
     links = [("/", "🏠 Início · todos os grupos")] + [("/" + n["key"], f'{n["emoji"]} {n["title"]}') for n in NICHES]
     items = "".join(
@@ -64,7 +64,7 @@ def header(current, menu=True):
     tag = 'a class="logo" href="/"' if menu else 'span class="logo"'
     end = "a" if menu else "span"
     return f"""<header class="site-header"><div class="wrap">
-  <{tag}><img src="/assets/img/icon-64.png" alt="" width="30" height="30">CLUB SONAR</{end}>
+  <{tag}><img src="{icon}" alt="" width="30" height="30">{E(name)}</{end}>
   {nav}
 </div></header>
 """
@@ -128,7 +128,13 @@ def niche_page(n):
         {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
     ])
-    top = LOGO if n.get("heroLogo") else f'<div class="icon" aria-hidden="true">{n["emoji"]}</div>'
+    logo = n.get("logo") or {}
+    if logo.get("hero"):
+        top = f'<div class="hero-logo square"><img src="{logo["hero"]}" alt="{E(n["brand"])}" width="160" height="160"></div>'
+    elif n.get("heroLogo"):
+        top = LOGO
+    else:
+        top = f'<div class="icon" aria-hidden="true">{n["emoji"]}</div>'
     perks = "\n".join(f'      <li><span class="p-icon" aria-hidden="true">{i}</span><div><strong>{E(h)}</strong><span>{E(t)}</span></div></li>'
                       for i, h, t in p["perks"])
     proofs = n.get("proofs") or []
@@ -145,8 +151,9 @@ def niche_page(n):
   </section>
 """
     faq_html = "\n".join(f"    <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
-    return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema)
-            + header(f"/{key}", SITE.get("menuOnNichePages", True))
+    return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"))
+            + header(f"/{key}", SITE.get("menuOnNichePages", True),
+                     logo.get("icon", "/assets/img/icon-64.png"), logo.get("headerName", "CLUB SONAR"))
             + f"""<main class="wrap">
   <div class="hero">
     {top}

@@ -149,7 +149,13 @@
           "width": 240,
           "height": 459
         }
-      ]
+      ],
+      "logo": {
+        "hero": "/assets/img/pet/logo.webp",
+        "icon": "/assets/img/pet/icon-64.png",
+        "og": "/assets/img/pet/og.jpg",
+        "headerName": "SONAR PET"
+      }
     }
   ]
 }
