@@ -17,3 +17,9 @@ Páginas ponte dos grupos de ofertas no WhatsApp. Site estático servido pelo Gi
 - `build.py` — gera `index.html`, `<nicho>/index.html`, `<nicho>/entrar/index.html`, `privacidade/index.html` e `config.js`.
 - `assets/site.css` — estilo único (paleta e contrastes comentados no topo).
 - `tracking.js` — eventos `page_view`, `cta_click` (nicho, posição, variante) e `scroll_50`, guarda UTMs da visita. Analytics e pixel só carregam se os IDs forem preenchidos no `site.json`.
+
+## Métricas (Cloudflare Web Analytics)
+
+- Ativado pelo `cfAnalyticsToken` no `site.json`. Grátis, sem cookies; não precisa de banner.
+- O Cloudflare conta só visitas de página, não eventos. Por isso **cliques no botão = visitas a `/<nicho>/entrar`**.
+- Taxa de clique de um nicho = visitas a `/pet/entrar` ÷ visitas a `/pet`.

@@ -24,6 +24,7 @@
   },
   "metaPixelId": "",
   "ga4Id": "",
+  "cfAnalyticsToken": "80817ee50f4f4da09d3f0798ebe7fc23",
   "niches": [
     {
       "key": "ofertas",
@@ -130,6 +131,12 @@
           "alt": "Print de oferta no grupo — Brinquedo dispensador de petisco: de R$ 59,90 por R$ 29,90 (50% OFF)",
           "width": 240,
           "height": 280
+        },
+        {
+          "src": "/assets/img/provas/pet-pato.webp",
+          "alt": "Print de oferta no grupo — Pelúcia pato antiestresse: de R$ 47,58 por R$ 31,22 (34% OFF)",
+          "width": 240,
+          "height": 365
         },
         {
           "src": "/assets/img/provas/pet-cercado.webp",
