@@ -1,10 +1,9 @@
 {
-  "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js).",
+  "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js). Para mostrar os prints de um nicho de novo, renomeie proofsHidden para proofs.",
   "domain": "https://clubsonar.com.br",
   "siteName": "Club Sonar",
   "contact": {
     "email": "marcos.assis.sonar@gmail.com",
-    "phone": "(14) 99162-8848",
     "instagram": ""
   },
   "stores": [
@@ -125,43 +124,51 @@
         ],
         "final": "Seu pet agradece. Entre agora."
       },
-      "proofs": [
-        {
-          "src": "/assets/img/provas/pet-dispensador.webp",
-          "alt": "Print de oferta no grupo — Brinquedo dispensador de petisco: de R$ 59,90 por R$ 29,90 (50% OFF)",
-          "width": 240,
-          "height": 280
-        },
-        {
-          "src": "/assets/img/provas/pet-pato.webp",
-          "alt": "Print de oferta no grupo — Pelúcia pato antiestresse: de R$ 47,58 por R$ 31,22 (34% OFF)",
-          "width": 240,
-          "height": 365
-        },
-        {
-          "src": "/assets/img/provas/pet-cercado.webp",
-          "alt": "Print de oferta no grupo — Cercado dobrável para cães: de R$ 139,99 por R$ 81,47 (41% OFF)",
-          "width": 240,
-          "height": 399
-        },
-        {
-          "src": "/assets/img/provas/pet-shampoo.webp",
-          "alt": "Print de oferta no grupo — Kit shampoo e condicionador Up Clean: de R$ 34,90 por R$ 25,00 (28% OFF)",
-          "width": 240,
-          "height": 546
-        },
-        {
-          "src": "/assets/img/provas/pet-mordedor.webp",
-          "alt": "Print de oferta no grupo — Mordedor de madeira para cachorro: de R$ 36,00 por R$ 30,34 (15% OFF)",
-          "width": 240,
-          "height": 459
-        }
-      ],
       "logo": {
         "hero": "/assets/img/pet/logo.webp",
         "icon": "/assets/img/pet/icon-64.png",
         "og": "/assets/img/pet/og.jpg",
         "headerName": "SONAR PET"
+      },
+      "proofsHidden": [
+        {
+          "src": "/assets/img/provas/pet-dispensador.webp",
+          "alt": "Print de oferta no grupo — Brinquedo dispensador de petisco: de R$ 59,90 por R$ 29,90 (50% OFF)",
+          "width": 477,
+          "height": 556
+        },
+        {
+          "src": "/assets/img/provas/pet-pato.webp",
+          "alt": "Print de oferta no grupo — Pelúcia pato antiestresse: de R$ 47,58 por R$ 31,22 (34% OFF)",
+          "width": 381,
+          "height": 580
+        },
+        {
+          "src": "/assets/img/provas/pet-cercado.webp",
+          "alt": "Print de oferta no grupo — Cercado dobrável para cães: de R$ 139,99 por R$ 81,47 (41% OFF)",
+          "width": 345,
+          "height": 573
+        },
+        {
+          "src": "/assets/img/provas/pet-shampoo.webp",
+          "alt": "Print de oferta no grupo — Kit shampoo e condicionador Up Clean: de R$ 34,90 por R$ 25,00 (28% OFF)",
+          "width": 247,
+          "height": 562
+        },
+        {
+          "src": "/assets/img/provas/pet-mordedor.webp",
+          "alt": "Print de oferta no grupo — Mordedor de madeira para cachorro: de R$ 36,00 por R$ 30,34 (15% OFF)",
+          "width": 247,
+          "height": 472
+        }
+      ],
+      "video": {
+        "src": "/assets/video/pet-ofertas-loop.mp4",
+        "poster": "/assets/video/pet-ofertas-loop.webp",
+        "width": 720,
+        "height": 900,
+        "label": "Vídeo com achados reais do grupo Sonar Pet: brinquedos, colete, cercadinho e biscoito com desconto",
+        "note": "Achados reais do grupo, com preços vistos em 22/09. Os preços mudam."
       }
     }
   ]
