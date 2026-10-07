@@ -38,8 +38,8 @@
     banner.className = "consent";
     banner.setAttribute("role", "region");
     banner.setAttribute("aria-label", "Consentimento de privacidade");
-    banner.innerHTML = '<p>Usamos o Pixel da Meta para medir nossos anúncios. Você aceita? <a href="/privacidade">Saiba mais</a></p>' +
-      '<div class="row"><button type="button" data-consent="denied">Recusar</button><button type="button" data-consent="granted">Aceitar</button></div>';
+    banner.innerHTML = '<p>Usamos cookies para medir nossos anúncios. <a href="/privacidade">Saiba mais</a></p>' +
+      '<div class="row"><button type="button" data-consent="denied">Não, obrigado</button><button type="button" data-consent="granted">OK</button></div>';
     banner.addEventListener("click", function (ev) {
       var v = ev.target.getAttribute && ev.target.getAttribute("data-consent");
       if (!v) return;
