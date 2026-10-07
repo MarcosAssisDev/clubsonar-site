@@ -295,7 +295,7 @@ def privacy_page():
             + header("/privacidade")
             + f"""<main class="wrap prose">
   <h1>Política de Privacidade</h1>
-  <p>Última atualização: 5 de outubro de 2026.</p>
+  <p>Última atualização: 7 de outubro de 2026.</p>
   <p>O Club Sonar mantém este site para apresentar seus grupos gratuitos de ofertas no WhatsApp. Esta política explica, de acordo com a Lei Geral de Proteção de Dados (Lei 13.709/2018), quais dados tratamos e por quê.</p>
 
   <h2>1. Dados que coletamos</h2>
@@ -305,7 +305,7 @@ def privacy_page():
     <li><strong>Registros técnicos do servidor</strong> (como IP e navegador), mantidos pelo provedor de hospedagem para segurança e funcionamento do site.</li>
   </ul>
   <p><strong>Estatísticas de visita:</strong> usamos o Cloudflare Web Analytics para contar visitas e cliques de forma agregada (páginas vistas, origem e tipo de aparelho). Ele não usa cookies, não guarda dados no seu navegador e não identifica você.</p>
-  <p>O site não usa pixels de anúncio. Se passarmos a usar, esta política será atualizada e pediremos o seu consentimento antes de ativá-los.</p>
+  <p><strong>Pixel da Meta:</strong> usamos o Pixel da Meta (Facebook e Instagram) para medir a eficácia dos nossos anúncios. Ele coleta dados de navegação, como as páginas visitadas e os cliques nos botões de entrada no grupo, e os envia à Meta, que os trata conforme a política dela. Tratamos esses dados conforme a LGPD e você pode limitar esse rastreamento nas configurações de anúncios da sua conta da Meta ou nas configurações de privacidade do seu navegador.</p>
 
   <h2>2. Grupo no WhatsApp</h2>
   <p>Ao entrar em um grupo, o WhatsApp (Meta) trata seus dados conforme a política dele. Seu número e nome de perfil ficam visíveis para os administradores e, conforme a configuração do grupo, para outros participantes. Não usamos seu número para outra finalidade e você pode sair do grupo quando quiser.</p>

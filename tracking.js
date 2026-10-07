@@ -41,6 +41,7 @@
     if (!a) return;
     var niche = a.getAttribute("data-niche"), n = (C.niches || {})[niche] || {};
     track("cta_click", { niche: niche, group: n.groupName, position: a.getAttribute("data-position"), variant: a.getAttribute("data-variant") || "A" });
+    if (window.fbq) window.fbq("track", "Lead", { content_name: n.groupName || "grupo", content_category: niche });
   });
 
   // scroll_50: uma vez por página
