@@ -13,7 +13,12 @@
   function track(event, extra) {
     var payload = Object.assign({ event: event, landing: location.pathname, campaign_type: "GROUP_ACQUISITION" }, utm, extra || {});
     window.dataLayer.push(payload);
-    if (window.fbq) window.fbq("trackCustom", event, payload);
+    if (window.fbq) {
+      // O fbclid não vai para a Meta como dado do evento (dataLayer e gtag continuam com o payload completo)
+      var fbPayload = Object.assign({}, payload);
+      delete fbPayload.fbclid;
+      window.fbq("trackCustom", event, fbPayload);
+    }
     if (window.gtag) window.gtag("event", event, payload);
   }
 
@@ -22,6 +27,16 @@
   var CONSENT_KEY = "sonar_consent";
   function getConsent() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } }
   function setConsent(v) { try { localStorage.setItem(CONSENT_KEY, v); } catch (e) {} }
+  // Ao recusar: apaga os cookies do Pixel (_fbp, _fbc) no host atual e em .clubsonar.com.br
+  function clearFbCookies() {
+    try {
+      ["_fbp", "_fbc"].forEach(function (name) {
+        document.cookie = name + "=; Max-Age=0; path=/";
+        document.cookie = name + "=; Max-Age=0; path=/; domain=" + location.hostname;
+        document.cookie = name + "=; Max-Age=0; path=/; domain=.clubsonar.com.br";
+      });
+    } catch (e) {}
+  }
 
   function loadPixel() {
     if (window.fbq) { window.fbq("consent", "grant"); return; }
@@ -46,7 +61,10 @@
       setConsent(v);
       closeBanner();
       if (v === "granted") loadPixel();
-      else if (window.fbq) window.fbq("consent", "revoke"); // recusou depois de ter aceitado: para de enviar nesta página
+      else {
+        if (window.fbq) window.fbq("consent", "revoke"); // recusou depois de ter aceitado: para de enviar nesta página
+        clearFbCookies();
+      }
     });
     document.body.appendChild(banner);
   }
