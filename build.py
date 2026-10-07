@@ -94,7 +94,9 @@ def footer(niche=None, links=True):
     stores = ", ".join(SITE["stores"])
     nav = " ".join(([f'<a href="/">Início</a>'] + [f'<a href="/{n["key"]}">{E(n["title"])}</a>' for n in NICHES] if links else [])
                    + ([] if links else ['<a href="/">Ver outros grupos de ofertas</a>'])
-                   + ['<a href="/privacidade">Política de Privacidade</a>'])
+                   + ['<a href="/privacidade">Política de Privacidade</a>']
+                   # Só existe banner de consentimento quando o pixel está ligado (o tracking.js trata o clique)
+                   + (['<button type="button" class="link-btn" data-consent-open>Preferências de privacidade</button>'] if SITE["metaPixelId"] else []))
     return f"""<footer class="site-footer"><div class="wrap">
   <nav aria-label="Rodapé">{nav}</nav>
   <p><strong>Aviso de afiliado:</strong> alguns links são de afiliado. Podemos receber comissão pelas compras, sem custo extra para você. Preços e estoque podem mudar a qualquer momento.</p>
