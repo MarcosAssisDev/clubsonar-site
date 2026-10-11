@@ -80,19 +80,10 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
 /* Página única (páginas de grupo): topo + palco + rodapé de uma linha ocupam exatamente a tela */
 .single { display:flex; flex-direction:column; min-height:100vh; min-height:100svh; }
 .single .stage { flex:1; min-height:0; padding:24px 16px 40px; }
-/* Rodapé numa caixa de outra cor, no fim da tela e longe do botão */
-.single .site-footer { width:calc(100% - 32px); max-width:448px; margin:0 auto 16px; padding:6px 16px 10px;
-                       background:var(--card); border:1px solid var(--line); border-radius:16px; font-size:11px; line-height:1.45; }
-.single .site-footer .wrap { padding:0; }
-.single .site-footer p { margin:4px 0; }
-.single .site-footer nav { font-size:12px; gap:0 14px; }
-.single .site-footer nav a, .single .site-footer .link-btn { min-height:32px; }
-/* Rodapé limpo: botão Home, e-mail e link pequeno de privacidade */
-.site-footer.clean nav { align-items:center; gap:6px 16px; font-size:13px; }
-.site-footer.clean .home-btn { min-height:36px; padding:0 16px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.04); }
-.site-footer.clean .home-btn:hover { text-decoration:none; border-color:rgba(var(--glow),.7); }
-.site-footer.clean p { margin:2px 0 0; }
-.site-footer.clean .small { color:var(--muted); font-size:11px; font-weight:400; text-decoration:underline; }
+/* Sem rodapé: só um link discreto para a política de privacidade */
+.priv-link { align-self:center; display:inline-flex; align-items:center; min-height:32px; margin:0 0 8px; padding:0 8px;
+             color:var(--muted); font-size:11px; text-decoration:none; opacity:.75; }
+.priv-link:hover { opacity:1; text-decoration:underline; }
 .pref-btn { -webkit-appearance:none; appearance:none; min-height:44px; padding:0 16px; border:1px solid var(--line); border-radius:12px;
             background:transparent; color:var(--ink); font:inherit; font-weight:600; cursor:pointer; }
 /* Telas baixas (ex.: 360×640): logo e espaços menores para não precisar rolar */
@@ -102,10 +93,6 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
   .single .glow-line { margin:10px auto 12px; }
   .single h1 { margin-bottom:16px; font-size:clamp(20px, 5.6vw, 26px); }
   .single .stage { padding:10px 16px 10px; }
-  .single .site-footer { margin-bottom:10px; padding:4px 12px 6px; }
-  .single .site-footer p { margin:2px 0; }
-}
-}
 }
 
 /* Passos do "Como funciona" */

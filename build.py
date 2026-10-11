@@ -116,19 +116,14 @@ def badge_logo(n):
 
 
 def niche_footer():
-    """Rodapé limpo das páginas de grupo: Home, e-mail e um link pequeno para privacidade e avisos.
-    O aviso de afiliado, o não-vínculo e as preferências de privacidade ficam no topo da /privacidade."""
-    email = SITE["contact"].get("email")
-    mail = f'<a href="mailto:{E(email)}">{E(email)}</a>' if email else ""
-    return f"""<footer class="site-footer clean"><div class="wrap">
-  <nav aria-label="Rodapé"><a class="home-btn" href="/">Home</a>{mail}</nav>
-  <p><a class="small" href="/privacidade">Privacidade e avisos</a></p>
-</div></footer>
+    """Sem rodapé nas páginas de grupo: só um link discreto para a /privacidade (LGPD), que traz o
+    aviso de afiliado, o não-vínculo com as lojas, o contato e as preferências de privacidade."""
+    return """<a class="priv-link" href="/privacidade">Privacidade</a>
 <script src="/config.js{V}"></script>
 <script src="/tracking.js{V}"></script>
 </body>
 </html>
-"""
+""".replace("{V}", V)
 
 
 def niche_page(n):
