@@ -1,5 +1,5 @@
 {
-  "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js). No visual minimalista as páginas de grupo usam page.topline, page.h1, page.lead (passo 3 do Como funciona), faqTopic e video; badges, perks, final e proofsHidden ficam guardados para testes futuros.",
+  "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js). As páginas de grupo são de tela única e usam page.topline, page.h1 e page.lead (passo 3 do Como funciona); badges, perks, final, faqTopic, video e proofsHidden ficam guardados para testes futuros.",
   "domain": "https://clubsonar.com.br",
   "siteName": "Club Sonar",
   "contact": {

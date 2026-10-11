@@ -68,7 +68,7 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
         border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--muted); font-size:14px; }
 .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
 /* "Como funciona": aba que abre e recolhe ao toque (<details> nativo) */
-.how { width:100%; max-width:400px; margin-top:16px; text-align:left; }
+.how { width:100%; max-width:400px; margin-top:32px; text-align:left; }
 .how summary { list-style:none; display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px;
                color:var(--muted); font-size:15px; font-weight:600; cursor:pointer; border-radius:12px; }
 .how summary::-webkit-details-marker { display:none; }
@@ -76,22 +76,31 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
                       transform:translateY(-2px) rotate(45deg); transition:transform .2s; }
 .how[open] summary::after { transform:translateY(2px) rotate(-135deg); }
 .how summary:hover, .how[open] summary { color:var(--ink); }
-.how .steps { padding:14px 16px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.03);
-              animation:rise .25s ease-out both; }
+.how-body { margin-top:4px; padding:14px 16px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.03);
+            animation:rise .25s ease-out both; }
+.how-note { margin:12px 0 0; font-size:13px; color:var(--muted); }
 
-/* Conteúdo abaixo da dobra: discreto, mas existe (página não é só redirecionamento) */
-.below { padding:8px 0 8px; }
-.below h2 { font-size:17px; margin:28px 0 12px; text-align:center; }
+/* Página única (páginas de grupo): topo + palco + rodapé de uma linha ocupam exatamente a tela */
+.single { display:flex; flex-direction:column; min-height:100vh; min-height:100svh; }
+.single .stage { flex:1; min-height:0; padding:20px 16px; }
+.mini-footer { padding:8px 16px 12px; text-align:center; font-size:11px; line-height:1.45; color:var(--muted); }
+.mini-footer p { margin:0; }
+.mini-footer a, .mini-footer .link-btn { display:inline-flex; align-items:center; min-height:32px; padding:0 2px; border:0; background:none;
+                                         color:var(--ink); font:inherit; font-weight:600; text-decoration:none; cursor:pointer; }
+.mini-footer a:hover, .mini-footer .link-btn:hover { text-decoration:underline; }
+/* Telas baixas (ex.: 360×640): logo e espaços menores para não precisar rolar */
+@media (max-height:720px) {
+  .single .badge-logo { width:112px; height:112px; }
+  .single .glow-line { margin:12px auto 14px; }
+  .single h1 { margin-bottom:16px; font-size:clamp(20px, 5.6vw, 26px); }
+  .single .how { margin-top:24px; }
+}
+
+/* Passos do "Como funciona" */
 .steps { counter-reset:s; display:grid; gap:10px; list-style:none; margin:0; padding:0; }
 .steps li { counter-increment:s; display:flex; gap:12px; align-items:center; color:var(--muted); }
 .steps li::before { content:counter(s); flex:none; width:28px; height:28px; border-radius:50%; display:grid; place-items:center;
                     border:1px solid rgba(var(--glow),.6); color:var(--ink); font-weight:800; font-size:14px; }
-.faq { border-bottom:1px solid var(--line); }
-.faq summary { min-height:48px; display:flex; align-items:center; cursor:pointer; font-weight:600; }
-.faq p { color:var(--muted); margin:0 0 14px; }
-.proof-video { display:block; width:100%; max-width:320px; height:auto; margin:0 auto; border-radius:18px; background:var(--card);
-               box-shadow:0 0 0 1px var(--line), 0 0 32px rgba(var(--glow),.25); }
-.note { font-size:13px; color:var(--muted); margin:8px 0 0; text-align:center; }
 
 /* Home: lista simples de grupos */
 .stage.home { min-height:auto; padding:40px 0 16px; }

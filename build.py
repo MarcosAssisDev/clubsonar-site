@@ -102,16 +102,6 @@ def cta(key, position, label):
             f'data-loading-text="Abrindo o WhatsApp…">{WA_ICON}{SPIN}<span class="cta-label">{E(label)}</span></a>')
 
 
-def faq_for(n):
-    return [
-        ("É grátis?", "Sim. Entrar e participar do grupo é 100% gratuito."),
-        ("Quantas mensagens vou receber?", "Depende das promoções do dia. Mandamos só o que vale a pena e, se preferir, você pode silenciar o grupo e conferir quando quiser."),
-        ("É seguro?", "Sim. Você entra pelo convite oficial do WhatsApp e não pedimos nenhum dado. Os links levam para as próprias lojas, onde a compra acontece normalmente. Nunca pedimos pagamento, senha ou código por mensagem."),
-        ("Como sair do grupo?", "Abra o grupo no WhatsApp, toque no nome dele e escolha “Sair do grupo”. Pronto, sem complicação."),
-        tuple(n["page"]["faqTopic"]),
-    ]
-
-
 def badge_logo(n):
     """Logo central no círculo com brilho. Logo quadrado (Sonar Pet) preenche o círculo; o horizontal (Sonar Ofertas) fica dentro."""
     logo = n.get("logo") or {}
@@ -120,35 +110,32 @@ def badge_logo(n):
     return '<div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div>'
 
 
+def mini_footer(n):
+    """Rodapé de uma linha das páginas de grupo (página única, sem rolagem).
+    Mantém o checklist do guia: aviso de afiliado, não-vínculo com lojas/WhatsApp e privacidade (o contato está na política)."""
+    prefs = (' · <button type="button" class="link-btn" data-consent-open>Preferências de privacidade</button>'
+             if SITE["metaPixelId"] else "")
+    return f"""<footer class="mini-footer">
+  <p>Links de afiliado: podemos receber comissão, sem custo extra para você. Sem vínculo com {E(", ".join(SITE["stores"]))} ou WhatsApp.</p>
+  <p><a href="/">Outros grupos</a> · <a href="/privacidade">Privacidade</a>{prefs}</p>
+</footer>
+<script src="/config.js"></script>
+<script src="/tracking.js"></script>
+</body>
+</html>
+"""
+
+
 def niche_page(n):
     p, key = n["page"], n["key"]
-    faq = faq_for(n)
-    schema = ld([
-        {"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
-         "inLanguage": "pt-BR", "description": p["description"],
-         "isPartOf": {"@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/"}},
-        {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
-            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
-    ])
+    schema = ld({"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
+                 "inLanguage": "pt-BR", "description": p["description"],
+                 "isPartOf": {"@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/"}})
     logo = n.get("logo") or {}
-    video = n.get("video")
-    video_html = ""
-    if video:
-        # Vídeo mudo em loop com achados reais; abaixo da dobra, só baixa os metadados até aparecer.
-        video_html = f"""
-  <h2>Achados reais do grupo</h2>
-  <video class="proof-video" poster="{video["poster"]}" width="{video["width"]}" height="{video["height"]}"
-         autoplay muted loop playsinline preload="metadata" aria-label="{E(video["label"])}">
-    <source src="{video["src"]}" type="video/mp4">
-    <source src="{video["src"].replace(".mp4", ".webm")}" type="video/webm">
-  </video>
-  <p class="note">{E(video["note"])}</p>
-"""
-    faq_html = "\n".join(f"  <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
-    return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"), f"t-{key}")
+    # Página única: tudo cabe numa tela do celular; só o "Como funciona" aberto pode pedir rolagem.
+    return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"), f"t-{key} single")
             + topline(p.get("topline", n["brand"]))
-            + f"""<main class="wrap">
-<section class="stage">
+            + f"""<main class="wrap stage">
   {badge_logo(n)}
   <span class="glow-line" aria-hidden="true"></span>
   <h1>{p["h1"]}</h1>
@@ -157,21 +144,17 @@ def niche_page(n):
   <!-- Aba recolhível nativa: fechada por padrão, abre e fecha a cada toque (sem JavaScript; o texto continua no HTML) -->
   <details class="how">
     <summary>Como funciona</summary>
-    <ol class="steps">
-      <li>Toque em “Entrar no grupo grátis”.</li>
-      <li>O WhatsApp abre com o convite do grupo {E(n["groupName"])}. Toque em “Entrar”.</li>
-      <li>Pronto! {E(p["lead"])}</li>
-    </ol>
+    <div class="how-body">
+      <ol class="steps">
+        <li>Toque em “Entrar no grupo grátis”.</li>
+        <li>O WhatsApp abre com o convite do grupo {E(n["groupName"])}. Toque em “Entrar”.</li>
+        <li>Pronto! {E(p["lead"])}</li>
+      </ol>
+      <p class="how-note">Você entra pelo convite oficial do WhatsApp e não pedimos nenhum dado. Para sair, é só tocar em “Sair do grupo”.</p>
+    </div>
   </details>
-</section>
-
-<section class="below">
-{video_html}
-  <h2>Perguntas frequentes</h2>
-{faq_html}
-</section>
 </main>
-""" + footer(n, links=SITE.get("menuOnNichePages", True)))
+""" + mini_footer(n))
 
 
 def home_page():
