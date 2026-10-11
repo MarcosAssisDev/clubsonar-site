@@ -24,50 +24,28 @@
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "80817ee50f4f4da09d3f0798ebe7fc23"}'></script>
 </head>
-<body class="t-pet">
+<body class="t-pet single">
 <p class="topline">🐾 Grupo de ofertas para pets</p>
-<main class="wrap">
-<section class="stage">
+<main class="wrap stage">
   <div class="badge-logo"><img src="/assets/img/pet/logo.webp" alt="Sonar Pet Ofertas" width="148" height="148" fetchpriority="high"></div>
   <span class="glow-line" aria-hidden="true"></span>
   <h1>Ofertas para o seu pet, <span class="hl">direto no WhatsApp</span></h1>
   <a class="cta" href="/pet/entrar" data-cta data-niche="pet" data-position="hero" data-loading-text="Abrindo o WhatsApp…"><svg class="wa" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span class="spin" aria-hidden="true"></span><span class="cta-label">Entrar no grupo grátis</span></a>
   <p class="pill"><span class="dot" aria-hidden="true"></span>Grátis, sem spam, saia quando quiser</p>
-  <!-- Aba recolhível nativa: fechada por padrão, abre e fecha a cada toque (sem JavaScript; o texto continua no HTML) -->
-  <details class="how">
-    <summary>Como funciona</summary>
-    <ol class="steps">
-      <li>Toque em “Entrar no grupo grátis”.</li>
-      <li>O WhatsApp abre com o convite do grupo Sonar Pet #101. Toque em “Entrar”.</li>
-      <li>Pronto! As ofertas de ração, petiscos e acessórios chegam direto no seu celular.</li>
-    </ol>
-  </details>
-</section>
-
-<section class="below">
-
-  <h2>Achados reais do grupo</h2>
-  <video class="proof-video" poster="/assets/video/pet-ofertas-loop.webp" width="720" height="900"
-         autoplay muted loop playsinline preload="metadata" aria-label="Vídeo com achados reais do grupo Sonar Pet: brinquedos, colete, cercadinho e biscoito com desconto">
-    <source src="/assets/video/pet-ofertas-loop.mp4" type="video/mp4">
-    <source src="/assets/video/pet-ofertas-loop.webm" type="video/webm">
-  </video>
-  <p class="note">Achados reais do grupo, com preços vistos em 22/09. Os preços mudam.</p>
-
-  <h2>Perguntas frequentes</h2>
-  <details class="faq"><summary>É grátis?</summary><p>Sim. Entrar e participar do grupo é 100% gratuito.</p></details>
-  <details class="faq"><summary>Quantas mensagens vou receber?</summary><p>Depende das promoções do dia. Mandamos só o que vale a pena e, se preferir, você pode silenciar o grupo e conferir quando quiser.</p></details>
-  <details class="faq"><summary>É seguro?</summary><p>Sim. Você entra pelo convite oficial do WhatsApp e não pedimos nenhum dado. Os links levam para as próprias lojas, onde a compra acontece normalmente. Nunca pedimos pagamento, senha ou código por mensagem.</p></details>
-  <details class="faq"><summary>Como sair do grupo?</summary><p>Abra o grupo no WhatsApp, toque no nome dele e escolha “Sair do grupo”. Pronto, sem complicação.</p></details>
-  <details class="faq"><summary>As ofertas são para cães e gatos?</summary><p>Sim, e também para outros pets quando aparece uma boa promoção.</p></details>
-</section>
+  <!-- Perguntas frequentes: cada uma abre e fecha a cada toque (<details> nativo, sem JavaScript; o texto continua no HTML) -->
+  <section class="faqs" aria-labelledby="faq-title">
+    <h2 id="faq-title">Perguntas frequentes</h2>
+    <details class="faq"><summary>É grátis?</summary><p>Sim. Entrar e participar do grupo é 100% gratuito.</p></details>
+    <details class="faq"><summary>Quantas mensagens vou receber?</summary><p>Depende das promoções do dia. Mandamos só o que vale a pena e, se preferir, você pode silenciar o grupo e conferir quando quiser.</p></details>
+    <details class="faq"><summary>É seguro?</summary><p>Sim. Você entra pelo convite oficial do WhatsApp e não pedimos nenhum dado. Os links levam para as próprias lojas, onde a compra acontece normalmente. Nunca pedimos pagamento, senha ou código por mensagem.</p></details>
+    <details class="faq"><summary>Como sair do grupo?</summary><p>Abra o grupo no WhatsApp, toque no nome dele e escolha “Sair do grupo”. Pronto, sem complicação.</p></details>
+    <details class="faq"><summary>As ofertas são para cães e gatos?</summary><p>Sim, e também para outros pets quando aparece uma boa promoção.</p></details>
+  </section>
 </main>
-<footer class="site-footer"><div class="wrap">
-  <nav aria-label="Rodapé"><a href="/">Ver outros grupos de ofertas</a> <a href="/privacidade">Política de Privacidade</a> <button type="button" class="link-btn" data-consent-open>Preferências de privacidade</button></nav>
-  <p><strong>Aviso de afiliado:</strong> alguns links são de afiliado. Podemos receber comissão pelas compras, sem custo extra para você. Preços e estoque podem mudar a qualquer momento.</p>
-  <p>Não temos vínculo com Mercado Livre, Amazon, Shopee, TikTok Shop nem com o WhatsApp. As marcas citadas pertencem aos seus donos.</p>
-  <p>Contato: Instagram <a href="https://instagram.com/sonar_pet" rel="noopener">@sonar_pet</a> · <a href="mailto:marcos.assis.sonar@gmail.com">marcos.assis.sonar@gmail.com</a></p>
-</div></footer>
+<footer class="mini-footer">
+  <p>Links de afiliado: podemos receber comissão, sem custo extra para você. Sem vínculo com as lojas ou o WhatsApp.</p>
+  <p><a href="/">Outros grupos</a> · <a href="/privacidade">Privacidade</a> · <button type="button" class="link-btn" data-consent-open>Preferências de privacidade</button></p>
+</footer>
 <script src="/config.js"></script>
 <script src="/tracking.js"></script>
 </body>
