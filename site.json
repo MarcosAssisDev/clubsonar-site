@@ -1,5 +1,5 @@
 {
-  "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js). Para mostrar os prints de um nicho de novo, renomeie proofsHidden para proofs.",
+  "_comment": "Fonte única do site. Depois de editar, rode: python3 build.py (gera os HTML e o config.js). No visual minimalista as páginas de grupo usam page.topline, page.h1, page.lead (passo 3 do Como funciona), faqTopic e video; badges, perks, final e proofsHidden ficam guardados para testes futuros.",
   "domain": "https://clubsonar.com.br",
   "siteName": "Club Sonar",
   "contact": {
@@ -45,7 +45,7 @@
         "description": "Entre no grupo de ofertas Sonar Ofertas no WhatsApp: promoções do dia e cupons em eletrônicos, casa, moda e beleza. Grátis, sem spam.",
         "ogDescription": "Promoções do dia e cupons direto no seu WhatsApp. Grátis, sem spam.",
         "h1": "Receba as <span class=\"hl\">melhores ofertas do dia</span> no seu WhatsApp",
-        "lead": "Garimpamos promoções nas maiores lojas e mandamos só o que vale a pena.",
+        "lead": "As promoções do dia chegam direto no seu celular.",
         "badges": [
           "⏳ Vagas limitadas",
           "🏷️ Descontos do dia",
@@ -72,7 +72,8 @@
           "Que tipo de oferta vocês mandam?",
           "Eletrônicos, casa, cozinha, moda, beleza e itens do dia a dia, sempre de lojas conhecidas."
         ],
-        "final": "Entre agora e comece a economizar."
+        "final": "Entre agora e comece a economizar.",
+        "topline": "🔥 Grupo de ofertas do dia"
       }
     },
     {
@@ -95,7 +96,7 @@
         "description": "Ofertas de ração, petiscos, brinquedos e acessórios para pets no WhatsApp. Entre grátis no grupo Sonar Pet. Sem spam, saia quando quiser.",
         "ogDescription": "Ração, petiscos e acessórios com desconto direto no seu WhatsApp.",
         "h1": "Ofertas para o seu pet, <span class=\"hl\">direto no WhatsApp</span>",
-        "lead": "Ração, petiscos, brinquedos e acessórios com desconto, garimpados todos os dias para quem cuida de cães e gatos.",
+        "lead": "As ofertas de ração, petiscos e acessórios chegam direto no seu celular.",
         "badges": [
           "⏳ Vagas limitadas",
           "🦴 Achados do dia",
@@ -122,7 +123,8 @@
           "As ofertas são para cães e gatos?",
           "Sim, e também para outros pets quando aparece uma boa promoção."
         ],
-        "final": "Seu pet agradece. Entre agora."
+        "final": "Seu pet agradece. Entre agora.",
+        "topline": "🐾 Grupo de ofertas para pets"
       },
       "logo": {
         "hero": "/assets/img/pet/logo.webp",

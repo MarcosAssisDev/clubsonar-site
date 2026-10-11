@@ -16,7 +16,6 @@ DOMAIN = SITE["domain"].rstrip("/")
 NICHES = [n for n in SITE["niches"] if n["active"]]
 
 WA_ICON = ('<svg class="wa" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>')
-LOGO = '<div class="hero-logo"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="220" height="80"></div>'
 E = html.escape
 
 
@@ -27,10 +26,9 @@ def cf_beacon():
         return ""
     return ("<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" "
             f"data-cf-beacon='{json.dumps({'token': t})}'></script>\n")
-CUR = ' aria-current="page"'
 
 
-def head(title, desc, path, og_desc=None, extra="", og_image="/assets/img/og.jpg"):
+def head(title, desc, path, og_desc=None, extra="", og_image="/assets/img/og.jpg", theme="t-ofertas"):
     url = DOMAIN + path
     return f"""<!doctype html>
 <html lang="pt-BR">
@@ -51,10 +49,10 @@ def head(title, desc, path, og_desc=None, extra="", og_image="/assets/img/og.jpg
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-<meta name="theme-color" content="#1b3b62">
+<meta name="theme-color" content="#120c07">
 <link rel="stylesheet" href="/assets/site.css">
 {extra}{cf_beacon()}</head>
-<body>
+<body class="{theme}">
 """
 
 
@@ -62,21 +60,10 @@ def ld(obj):
     return '<script type="application/ld+json">\n' + json.dumps(obj, ensure_ascii=False) + "\n</script>\n"
 
 
-def header(current, menu=True, icon="/assets/img/icon-64.png", name="CLUB SONAR"):
-    """Topo: marca pequena; o menu de grupos é <details>, sem JavaScript."""
-    links = [("/", "🏠 Início · todos os grupos")] + [("/" + n["key"], f'{n["emoji"]} {n["title"]}') for n in NICHES]
-    items = "".join(
-        f'<a href="{p}"{CUR if p == current else ""}>{E(t)}</a>' + ("<hr>" if p == "/" else "")
-        for p, t in links)
-    nav = f'<details class="menu"><summary>☰ Grupos</summary><nav aria-label="Grupos">{items}</nav></details>' if menu else ""
-    # Sem menu, a marca também não é link: a única saída da página é o CTA.
-    tag = 'a class="logo" href="/"' if menu else 'span class="logo"'
-    end = "a" if menu else "span"
-    return f"""<header class="site-header"><div class="wrap">
-  <{tag}><img src="{icon}" alt="" width="30" height="30">{E(name)}</{end}>
-  {nav}
-</div></header>
-"""
+def topline(text, link=False):
+    """Faixa do topo: marca do canal em uma linha, sem menu (nas páginas de grupo a única saída é o CTA)."""
+    inner = f'<a href="/">{E(text)}</a>' if link else E(text)
+    return f'<p class="topline">{inner}</p>\n'
 
 
 def footer(niche=None, links=True):
@@ -87,10 +74,6 @@ def footer(niche=None, links=True):
         contact.append(f'Instagram <a href="https://instagram.com/{E(ig)}" rel="noopener">@{E(ig)}</a>')
     if email:
         contact.append(f'<a href="mailto:{E(email)}">{E(email)}</a>')
-    phone = SITE["contact"].get("phone")
-    if phone:
-        digits = "".join(ch for ch in phone if ch.isdigit())
-        contact.append(f'<a href="tel:+55{digits}">{E(phone)}</a>')
     stores = ", ".join(SITE["stores"])
     nav = " ".join(([f'<a href="/">Início</a>'] + [f'<a href="/{n["key"]}">{E(n["title"])}</a>' for n in NICHES] if links else [])
                    + ([] if links else ['<a href="/">Ver outros grupos de ofertas</a>'])
@@ -110,14 +93,13 @@ def footer(niche=None, links=True):
 """
 
 
+SPIN = '<span class="spin" aria-hidden="true"></span>'
+
+
 def cta(key, position, label):
-    return (f'<a class="cta" href="/{key}/entrar" data-cta data-niche="{key}" data-position="{position}">'
-            f'{WA_ICON}<span>{E(label)}</span></a>')
-
-
-def badges(items, align=""):
-    out = "".join(f'<span class="badge{" hot" if "vaga" in b.lower() else (" info" if "grátis" in b.lower() else "")}">{E(b)}</span>' for b in items)
-    return f'<div class="badges{align}">{out}</div>'
+    # data-loading-text: o tracking.js troca o texto e mostra o loading depois de registrar o clique (cta_click + Lead)
+    return (f'<a class="cta" href="/{key}/entrar" data-cta data-niche="{key}" data-position="{position}" '
+            f'data-loading-text="Abrindo o WhatsApp…">{WA_ICON}{SPIN}<span class="cta-label">{E(label)}</span></a>')
 
 
 def faq_for(n):
@@ -128,6 +110,14 @@ def faq_for(n):
         ("Como sair do grupo?", "Abra o grupo no WhatsApp, toque no nome dele e escolha “Sair do grupo”. Pronto, sem complicação."),
         tuple(n["page"]["faqTopic"]),
     ]
+
+
+def badge_logo(n):
+    """Logo central no círculo com brilho. Logo quadrado (Sonar Pet) preenche o círculo; o horizontal (Sonar Ofertas) fica dentro."""
+    logo = n.get("logo") or {}
+    if logo.get("hero"):
+        return f'<div class="badge-logo"><img src="{logo["hero"]}" alt="{E(n["brand"])}" width="148" height="148" fetchpriority="high"></div>'
+    return '<div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div>'
 
 
 def niche_page(n):
@@ -141,120 +131,75 @@ def niche_page(n):
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
     ])
     logo = n.get("logo") or {}
-    if logo.get("hero"):
-        top = f'<div class="hero-logo square"><img src="{logo["hero"]}" alt="{E(n["brand"])}" width="160" height="160"></div>'
-    elif n.get("heroLogo"):
-        top = LOGO
-    else:
-        top = f'<div class="icon" aria-hidden="true">{n["emoji"]}</div>'
-    perks = "\n".join(f'      <li><span class="p-icon" aria-hidden="true">{i}</span><div><strong>{E(h)}</strong><span>{E(t)}</span></div></li>'
-                      for i, h, t in p["perks"])
-    proofs = n.get("proofs") or []
-    proof_html = ""
-    if proofs:
-        total = len(proofs)
-        imgs = "\n".join(
-            f'      <figure class="slide"><img src="{x["src"]}" alt="{E(x["alt"])}" width="{x["width"]}" height="{x["height"]}" loading="lazy" decoding="async">'
-            f'<figcaption>{i} de {total}</figcaption></figure>' for i, x in enumerate(proofs, 1))
-        proof_html = f"""
-  <section class="block">
-    <h2>Ofertas reais do grupo</h2>
-    <div class="proofs" tabindex="0" aria-label="Prints de ofertas postadas no grupo (deslize para o lado)">
-{imgs}
-    </div>
-    <p class="swipe-hint" aria-hidden="true">Deslize para o lado para ver mais ofertas →</p>
-    <p class="note">Prints de ofertas postadas no grupo {E(n["groupName"])}. Preços da data do post; podem ter mudado.</p>
-  </section>
-"""
     video = n.get("video")
+    video_html = ""
     if video:
-        # Vídeo mudo em loop no lugar dos prints; sem som, o navegador permite tocar sozinho.
-        proof_html = f"""
-  <section class="block">
-    <h2>Achados reais do grupo</h2>
-    <video class="proof-video" poster="{video["poster"]}" width="{video["width"]}" height="{video["height"]}"
-           autoplay muted loop playsinline preload="metadata" aria-label="{E(video["label"])}">
-      <source src="{video["src"]}" type="video/mp4">
-      <source src="{video["src"].replace(".mp4", ".webm")}" type="video/webm">
-    </video>
-    <p class="note">{E(video["note"])}</p>
-  </section>
+        # Vídeo mudo em loop com achados reais; abaixo da dobra, só baixa os metadados até aparecer.
+        video_html = f"""
+  <h2>Achados reais do grupo</h2>
+  <video class="proof-video" poster="{video["poster"]}" width="{video["width"]}" height="{video["height"]}"
+         autoplay muted loop playsinline preload="metadata" aria-label="{E(video["label"])}">
+    <source src="{video["src"]}" type="video/mp4">
+    <source src="{video["src"].replace(".mp4", ".webm")}" type="video/webm">
+  </video>
+  <p class="note">{E(video["note"])}</p>
 """
-    faq_html = "\n".join(f"    <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
-    return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"))
-            + header(f"/{key}", SITE.get("menuOnNichePages", True),
-                     logo.get("icon", "/assets/img/icon-64.png"), logo.get("headerName", "CLUB SONAR"))
+    faq_html = "\n".join(f"  <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
+    return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"), f"t-{key}")
+            + topline(p.get("topline", n["brand"]))
             + f"""<main class="wrap">
-  <div class="hero">
-    {top}
-    <p class="brand-line">{E(n["brand"])} · grupo no WhatsApp</p>
-    <h1>{p["h1"]}</h1>
-    <p class="lead">{E(p["lead"])}</p>
-    {cta(key, "hero", "Entrar no grupo grátis")}
-    <p class="reassure">Grátis, sem spam, saia quando quiser.</p>
-    {badges(p["badges"])}
-  </div>
-{proof_html}
-  <section class="block">
-    <h2>Como funciona</h2>
-    <ol class="steps card">
-      <li>Toque em “Entrar no grupo grátis”.</li>
-      <li>O WhatsApp abre com o convite. Toque em “Entrar”.</li>
-      <li>Pronto! As ofertas chegam direto no seu celular.</li>
-    </ol>
-  </section>
+<section class="stage">
+  {badge_logo(n)}
+  <span class="glow-line" aria-hidden="true"></span>
+  <h1>{p["h1"]}</h1>
+  {cta(key, "hero", "Entrar no grupo grátis")}
+  <p class="pill"><span class="dot" aria-hidden="true"></span>Grátis, sem spam, saia quando quiser</p>
+  <a class="down" href="#como-funciona">Como funciona ↓</a>
+</section>
 
-  <section class="block">
-    <h2>O que você recebe</h2>
-    <ul class="perks">
-{perks}
-    </ul>
-  </section>
-
-  <section class="block card center">
-    <h2>{E(p["final"])}</h2>
-    {cta(key, "meio", "Entrar no grupo grátis")}
-    <p class="urgency">Os grupos do WhatsApp têm limite de participantes.</p>
-  </section>
-
-  <section class="block">
-    <h2>Perguntas frequentes</h2>
+<section class="below" id="como-funciona">
+  <h2>Como funciona</h2>
+  <ol class="steps">
+    <li>Toque em “Entrar no grupo grátis”.</li>
+    <li>O WhatsApp abre com o convite do grupo {E(n["groupName"])}. Toque em “Entrar”.</li>
+    <li>Pronto! {E(p["lead"])}</li>
+  </ol>
+{video_html}
+  <h2>Perguntas frequentes</h2>
 {faq_html}
-  </section>
+</section>
 </main>
 """ + footer(n, links=SITE.get("menuOnNichePages", True)))
 
 
 def home_page():
-    cards = []
+    rows = []
     for n in NICHES:
         k = n["key"]
-        cards.append(f"""    <article class="group">
-      <div class="group-head"><div class="group-icon" aria-hidden="true">{n["emoji"]}</div><h3><a href="/{k}">{E(n["title"])}</a></h3></div>
-      <p>{E(n["description"])}</p>
-      {badges(n["badges"], " left")}
-      {cta(k, "home", "Entrar no grupo")}
-      <a class="more" href="/{k}">Saiba mais sobre o grupo →</a>
-    </article>""")
+        icon = (n.get("logo") or {}).get("icon")
+        pic = f'<img src="{icon}" alt="" width="52" height="52">' if icon else f'<img src="/assets/img/icon-192.png" alt="" width="52" height="52">'
+        # A linha inteira é o botão: vai direto ao /<nicho>/entrar (conta cta_click + Lead e mostra o loading)
+        rows.append(f"""  <li><a class="group" href="/{k}/entrar" data-cta data-niche="{k}" data-position="home" data-loading-text="Abrindo…">
+    <span class="group-icon" aria-hidden="true">{pic}</span>
+    <span class="group-text"><strong>{E(n["title"])}</strong><span>{E(n["description"])}</span></span>
+    <span class="go">{WA_ICON}{SPIN}<span class="cta-label">Entrar</span></span>
+  </a></li>""")
     schema = ld({"@context": "https://schema.org", "@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/",
                  "inLanguage": "pt-BR", "description": "Grupos de ofertas e cupons no WhatsApp."})
     return (head("Club Sonar · Grupos de Ofertas e Cupons no WhatsApp",
-                 "Escolha seu grupo de ofertas no WhatsApp: promoções do dia, cupons e achados selecionados. Grátis, sem spam e com vagas limitadas.",
+                 "Escolha seu grupo de ofertas no WhatsApp: promoções do dia, cupons e achados selecionados. Grátis e sem spam.",
                  "/", "Promoções do dia e cupons direto no seu WhatsApp.", schema)
-            + header("/")
+            + topline("Grupos de ofertas no WhatsApp")
             + f"""<main class="wrap">
-  <div class="hero">
-    {LOGO}
-    <h1>As melhores ofertas do dia, <span class="hl">direto no seu WhatsApp</span></h1>
-    <p class="lead">Escolha o grupo com a sua cara e entre grátis. Sem spam, saia quando quiser.</p>
-  </div>
-
-  <section class="block" aria-labelledby="grupos">
-    <h2 id="grupos">Escolha seu grupo</h2>
-    <div class="groups">
-{chr(10).join(cards)}
-    </div>
-  </section>
+<section class="stage home">
+  <div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div>
+  <span class="glow-line" aria-hidden="true"></span>
+  <h1>Escolha seu <span class="hl">grupo de ofertas</span></h1>
+  <p class="sub">Grátis, sem spam, saia quando quiser.</p>
+</section>
+<ul class="groups" aria-label="Grupos">
+{chr(10).join(rows)}
+</ul>
 </main>
 """ + footer())
 
@@ -277,11 +222,12 @@ def enter_page(n):
   {"window.addEventListener('load', function () { setTimeout(go, 150); });" if SITE.get("cfAnalyticsToken") else "go();"}
 </script>
 </head>
-<body>
-<main class="wrap center" style="padding-top:64px">
+<body class="t-{n["key"]}">
+<main class="opening">
+  <span class="spin" aria-hidden="true"></span>
   <h1>Abrindo o grupo {E(n["groupName"])}…</h1>
-  <p class="lead">Se o WhatsApp não abrir sozinho, toque no botão abaixo.</p>
-  <a class="cta" href="{url}" rel="noopener">{WA_ICON}<span>Abrir o grupo no WhatsApp</span></a>
+  <p>Se o WhatsApp não abrir sozinho, toque no botão abaixo.</p>
+  <a class="cta" href="{url}" rel="noopener">{WA_ICON}<span>Abrir no WhatsApp</span></a>
 </main>
 </body>
 </html>
@@ -294,7 +240,7 @@ def privacy_page():
     contact = (f'pelo e-mail <a href="mailto:{E(email)}">{E(email)}</a>' if email
                else f'pelo Instagram <a href="https://instagram.com/{E(ig)}" rel="noopener">@{E(ig)}</a>' if ig else "pelos nossos canais")
     return (head("Política de Privacidade · Club Sonar", "Como o Club Sonar trata dados pessoais, de acordo com a LGPD.", "/privacidade")
-            + header("/privacidade")
+            + topline("← Club Sonar · Grupos de ofertas", link=True)
             + f"""<main class="wrap prose">
   <h1>Política de Privacidade</h1>
   <p>Última atualização: 7 de outubro de 2026.</p>

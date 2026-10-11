@@ -94,9 +94,33 @@
   document.addEventListener("click", function (ev) {
     var a = ev.target.closest && ev.target.closest("[data-cta]");
     if (!a) return;
+    // Já está abrindo: toques repetidos não contam de novo (um Lead por clique no botão)
+    if (a.classList.contains("is-loading")) { ev.preventDefault(); return; }
     var niche = a.getAttribute("data-niche"), n = (C.niches || {})[niche] || {};
     track("cta_click", { niche: niche, group: n.groupName, position: a.getAttribute("data-position"), variant: a.getAttribute("data-variant") || "A" });
     if (window.fbq) window.fbq("track", "Lead", { content_name: n.groupName || "grupo", content_category: niche });
+
+    // Loading: os eventos acima já foram disparados; mostra o carregando e só então segue para /<nicho>/entrar.
+    // A espera curta também dá tempo de o Pixel enviar o Lead antes de sair da página.
+    // Ctrl/⌘/Shift/botão do meio (abrir em nova aba) seguem o comportamento normal do navegador.
+    if (ev.defaultPrevented || ev.button || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+    ev.preventDefault();
+    a.classList.add("is-loading");
+    a.setAttribute("aria-busy", "true");
+    var label = a.querySelector(".cta-label"), text = a.getAttribute("data-loading-text");
+    if (label && text) { a.setAttribute("data-label", label.textContent); label.textContent = text; }
+    setTimeout(function () { location.href = a.href; }, 600);
+  });
+
+  // Voltar do WhatsApp para a página (cache do navegador): devolve o botão ao normal
+  window.addEventListener("pageshow", function (ev) {
+    if (!ev.persisted) return;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-cta].is-loading"), function (a) {
+      a.classList.remove("is-loading");
+      a.removeAttribute("aria-busy");
+      var label = a.querySelector(".cta-label");
+      if (label && a.hasAttribute("data-label")) label.textContent = a.getAttribute("data-label");
+    });
   });
 
   // scroll_50: uma vez por página
