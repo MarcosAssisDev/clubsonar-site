@@ -68,7 +68,7 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
         border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--muted); font-size:14px; }
 .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
 /* Perguntas frequentes: cada pergunta abre e recolhe ao toque (<details> nativo) */
-.faqs { width:100%; max-width:400px; margin-top:32px; text-align:left; }
+.faqs { width:100%; max-width:400px; margin-top:48px; text-align:left; }
 .faqs h2 { margin:0 0 4px; font-size:16px; text-align:center; }
 .faq { border-bottom:1px solid var(--line); }
 .faq summary { list-style:none; display:flex; align-items:center; min-height:44px;
@@ -78,10 +78,15 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
 
 /* Página única (páginas de grupo): topo + palco + rodapé de uma linha ocupam exatamente a tela */
 .single { display:flex; flex-direction:column; min-height:100vh; min-height:100svh; }
-.single .stage { flex:1; min-height:0; padding:12px 16px; }
-.mini-footer { padding:8px 16px 12px; text-align:center; font-size:11px; line-height:1.45; color:var(--muted); }
+/* Conteúdo e rodapé centralizados juntos: em tela alta não sobra um vão entre as perguntas e o rodapé */
+.screen { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px 16px; }
+.single .stage { min-height:0; padding:0; }
+.mini-footer { width:100%; max-width:400px; margin-top:28px;
+               text-align:center; font-size:12px; line-height:1.5; color:var(--muted); }
 .mini-footer p { margin:0; }
-.mini-footer a, .mini-footer .link-btn { display:inline-flex; align-items:center; min-height:32px; padding:0 2px; border:0; background:none;
+.mini-footer nav { display:flex; flex-wrap:wrap; justify-content:center; gap:0 18px; margin-top:2px; }
+.mini-footer a, .mini-footer .link-btn { -webkit-appearance:none; appearance:none; display:inline-flex; align-items:center; min-height:36px;
+                                         padding:0; margin:0; border:0; border-radius:0; background:none; box-shadow:none;
                                          color:var(--ink); font:inherit; font-weight:600; text-decoration:none; cursor:pointer; }
 .mini-footer a:hover, .mini-footer .link-btn:hover { text-decoration:underline; }
 /* Telas baixas (ex.: 360×640): logo e espaços menores para não precisar rolar */
@@ -92,9 +97,10 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
   .single h1 { margin-bottom:12px; font-size:clamp(19px, 5.4vw, 24px); }
   .single .cta { min-height:52px; padding:12px 16px; }
   .single .pill { margin-top:10px; font-size:13px; padding:4px 12px; }
-  .single .faqs { margin-top:16px; }
+  .single .faqs { margin-top:28px; }
   .single .faq summary { min-height:38px; font-size:14px; }
-  .single .mini-footer { padding:6px 12px 8px; }
+  .single .mini-footer { margin-top:18px; font-size:11px; }
+  .single .mini-footer a, .single .mini-footer .link-btn { min-height:32px; }
 }
 }
 
