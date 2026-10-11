@@ -154,16 +154,18 @@ def niche_page(n):
   <h1>{p["h1"]}</h1>
   {cta(key, "hero", "Entrar no grupo grátis")}
   <p class="pill"><span class="dot" aria-hidden="true"></span>Grátis, sem spam, saia quando quiser</p>
-  <a class="down" href="#como-funciona">Como funciona ↓</a>
+  <!-- Aba recolhível nativa: fechada por padrão, abre e fecha a cada toque (sem JavaScript; o texto continua no HTML) -->
+  <details class="how">
+    <summary>Como funciona</summary>
+    <ol class="steps">
+      <li>Toque em “Entrar no grupo grátis”.</li>
+      <li>O WhatsApp abre com o convite do grupo {E(n["groupName"])}. Toque em “Entrar”.</li>
+      <li>Pronto! {E(p["lead"])}</li>
+    </ol>
+  </details>
 </section>
 
-<section class="below" id="como-funciona">
-  <h2>Como funciona</h2>
-  <ol class="steps">
-    <li>Toque em “Entrar no grupo grátis”.</li>
-    <li>O WhatsApp abre com o convite do grupo {E(n["groupName"])}. Toque em “Entrar”.</li>
-    <li>Pronto! {E(p["lead"])}</li>
-  </ol>
+<section class="below">
 {video_html}
   <h2>Perguntas frequentes</h2>
 {faq_html}
