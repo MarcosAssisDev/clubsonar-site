@@ -81,14 +81,21 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
 /* Conteúdo e rodapé centralizados juntos: em tela alta não sobra um vão entre as perguntas e o rodapé */
 .screen { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px 16px; }
 .single .stage { min-height:0; padding:0; }
-.mini-footer { width:100%; max-width:400px; margin-top:28px;
-               text-align:center; font-size:12px; line-height:1.5; color:var(--muted); }
-.mini-footer p { margin:0; }
-.mini-footer nav { display:flex; flex-wrap:wrap; justify-content:center; gap:0 18px; margin-top:2px; }
-.mini-footer a, .mini-footer .link-btn { -webkit-appearance:none; appearance:none; display:inline-flex; align-items:center; min-height:36px;
-                                         padding:0; margin:0; border:0; border-radius:0; background:none; box-shadow:none;
-                                         color:var(--ink); font:inherit; font-weight:600; text-decoration:none; cursor:pointer; }
-.mini-footer a:hover, .mini-footer .link-btn:hover { text-decoration:underline; }
+/* Rodapé (o mesmo de sempre) logo abaixo das perguntas, na largura do conteúdo */
+.single .site-footer { width:100%; max-width:400px; margin-top:28px; padding:8px 0 0; }
+.single .site-footer .wrap { padding:0; }
+.single .site-footer nav a, .single .site-footer .link-btn { min-height:40px; }
+/* Celular: rodapé compacto para caber junto na tela */
+@media (max-height:950px) {
+  .single .badge-logo { width:116px; height:116px; }
+  .single .glow-line { margin:12px auto 14px; }
+  .single h1 { margin-bottom:18px; }
+  .single .faqs { margin-top:36px; }
+  .single .site-footer { border-top:0; margin-top:14px; padding-top:0; font-size:11px; line-height:1.4; }
+  .single .site-footer p { margin:3px 0; }
+  .single .site-footer nav { font-size:12px; gap:0 12px; }
+  .single .site-footer nav a, .single .site-footer .link-btn { min-height:30px; }
+}
 /* Telas baixas (ex.: 360×640): logo e espaços menores para não precisar rolar */
 @media (max-height:720px) {
   .single .topline { padding:8px 16px; }
@@ -97,10 +104,13 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
   .single h1 { margin-bottom:12px; font-size:clamp(19px, 5.4vw, 24px); }
   .single .cta { min-height:52px; padding:12px 16px; }
   .single .pill { margin-top:10px; font-size:13px; padding:4px 12px; }
-  .single .faqs { margin-top:28px; }
-  .single .faq summary { min-height:38px; font-size:14px; }
-  .single .mini-footer { margin-top:18px; font-size:11px; }
-  .single .mini-footer a, .single .mini-footer .link-btn { min-height:32px; }
+  .single .faqs { margin-top:24px; }
+  .single .faq summary { min-height:36px; font-size:14px; }
+  .single .faqs h2 { font-size:15px; }
+  .single .site-footer { margin-top:16px; padding-top:4px; font-size:11px; }
+  .single .site-footer p { margin:3px 0; }
+  .single .site-footer nav { font-size:12px; }
+  .single .site-footer nav a, .single .site-footer .link-btn { min-height:32px; }
 }
 }
 
@@ -139,7 +149,7 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
 .site-footer { border-top:1px solid var(--line); margin-top:24px; padding:16px 0 32px; color:var(--muted); font-size:12px; text-align:center; }
 .site-footer p { margin:6px 0; }
 .site-footer nav { display:flex; flex-wrap:wrap; gap:0 16px; justify-content:center; font-size:13px; }
-.site-footer nav a, .site-footer .link-btn { display:inline-flex; align-items:center; min-height:48px; padding:0; border:0; background:none;
+.site-footer nav a, .site-footer .link-btn { -webkit-appearance:none; appearance:none; border-radius:0; display:inline-flex; align-items:center; min-height:48px; padding:0; border:0; background:none;
                                              color:var(--ink); font:inherit; font-weight:600; text-decoration:none; cursor:pointer; }
 .site-footer nav a:hover, .site-footer .link-btn:hover { text-decoration:underline; }
 

@@ -71,7 +71,7 @@ def topline(text, link=False):
     return f'<p class="topline">{inner}</p>\n'
 
 
-def footer(niche=None, links=True):
+def footer(niche=None, links=True, close=""):
     ig = (niche or {}).get("instagram") or SITE["contact"].get("instagram")
     email = SITE["contact"].get("email")
     contact = []
@@ -91,7 +91,7 @@ def footer(niche=None, links=True):
   <p>Não temos vínculo com {E(stores)} nem com o WhatsApp. As marcas citadas pertencem aos seus donos.</p>
   {"<p>Contato: " + " · ".join(contact) + "</p>" if contact else ""}
 </div></footer>
-<script src="/config.js{V}"></script>
+{close}<script src="/config.js{V}"></script>
 <script src="/tracking.js{V}"></script>
 </body>
 </html>
@@ -124,23 +124,6 @@ def badge_logo(n):
     return '<div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div>'
 
 
-def mini_footer(n):
-    """Rodapé de uma linha das páginas de grupo (página única, sem rolagem).
-    Mantém o checklist do guia: aviso de afiliado, não-vínculo com lojas/WhatsApp e privacidade (o contato está na política)."""
-    prefs = ('<button type="button" class="link-btn" data-consent-open>Preferências de privacidade</button>'
-             if SITE["metaPixelId"] else "")
-    return f"""  <footer class="mini-footer">
-    <p>Links de afiliado: podemos receber comissão, sem custo extra para você. Sem vínculo com as lojas ou o WhatsApp.</p>
-    <nav aria-label="Rodapé"><a href="/">Outros grupos</a><a href="/privacidade">Privacidade</a>{prefs}</nav>
-  </footer>
-</div>
-<script src="/config.js{V}"></script>
-<script src="/tracking.js{V}"></script>
-</body>
-</html>
-"""
-
-
 def niche_page(n):
     p, key = n["page"], n["key"]
     faq = faq_for(n)
@@ -170,7 +153,7 @@ def niche_page(n):
 {faq_html}
   </section>
 </main>
-""" + mini_footer(n))
+""" + footer(n, links=False, close="</div>\n"))
 
 
 def home_page():
