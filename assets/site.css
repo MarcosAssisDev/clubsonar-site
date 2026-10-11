@@ -67,22 +67,18 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
 .pill { display:inline-flex; align-items:center; gap:8px; margin:16px 0 0; padding:6px 14px; border-radius:999px;
         border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--muted); font-size:14px; }
 .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
-/* "Como funciona": aba que abre e recolhe ao toque (<details> nativo) */
-.how { width:100%; max-width:400px; margin-top:32px; text-align:left; }
-.how summary { list-style:none; display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px;
-               color:var(--muted); font-size:15px; font-weight:600; cursor:pointer; border-radius:12px; }
-.how summary::-webkit-details-marker { display:none; }
-.how summary::after { content:""; width:8px; height:8px; border-right:2px solid currentColor; border-bottom:2px solid currentColor;
-                      transform:translateY(-2px) rotate(45deg); transition:transform .2s; }
-.how[open] summary::after { transform:translateY(2px) rotate(-135deg); }
-.how summary:hover, .how[open] summary { color:var(--ink); }
-.how-body { margin-top:4px; padding:14px 16px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.03);
-            animation:rise .25s ease-out both; }
-.how-note { margin:12px 0 0; font-size:13px; color:var(--muted); }
+/* Perguntas frequentes: cada pergunta abre e recolhe ao toque (<details> nativo) */
+.faqs { width:100%; max-width:400px; margin-top:32px; text-align:left; }
+.faqs h2 { margin:0 0 4px; font-size:16px; text-align:center; }
+.faq { border-bottom:1px solid var(--line); }
+.faq summary { list-style:none; display:flex; align-items:center; min-height:44px;
+               font-size:15px; font-weight:600; cursor:pointer; }
+.faq summary::-webkit-details-marker { display:none; }
+.faq p { margin:0 0 12px; font-size:14px; color:var(--muted); animation:rise .25s ease-out both; }
 
 /* Página única (páginas de grupo): topo + palco + rodapé de uma linha ocupam exatamente a tela */
 .single { display:flex; flex-direction:column; min-height:100vh; min-height:100svh; }
-.single .stage { flex:1; min-height:0; padding:20px 16px; }
+.single .stage { flex:1; min-height:0; padding:12px 16px; }
 .mini-footer { padding:8px 16px 12px; text-align:center; font-size:11px; line-height:1.45; color:var(--muted); }
 .mini-footer p { margin:0; }
 .mini-footer a, .mini-footer .link-btn { display:inline-flex; align-items:center; min-height:32px; padding:0 2px; border:0; background:none;
@@ -90,10 +86,16 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
 .mini-footer a:hover, .mini-footer .link-btn:hover { text-decoration:underline; }
 /* Telas baixas (ex.: 360×640): logo e espaços menores para não precisar rolar */
 @media (max-height:720px) {
-  .single .badge-logo { width:112px; height:112px; }
-  .single .glow-line { margin:12px auto 14px; }
-  .single h1 { margin-bottom:16px; font-size:clamp(20px, 5.6vw, 26px); }
-  .single .how { margin-top:24px; }
+  .single .topline { padding:8px 16px; }
+  .single .badge-logo { width:84px; height:84px; }
+  .single .glow-line { margin:10px auto 10px; }
+  .single h1 { margin-bottom:12px; font-size:clamp(19px, 5.4vw, 24px); }
+  .single .cta { min-height:52px; padding:12px 16px; }
+  .single .pill { margin-top:10px; font-size:13px; padding:4px 12px; }
+  .single .faqs { margin-top:16px; }
+  .single .faq summary { min-height:38px; font-size:14px; }
+  .single .mini-footer { padding:6px 12px 8px; }
+}
 }
 
 /* Passos do "Como funciona" */

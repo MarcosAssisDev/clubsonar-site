@@ -102,6 +102,16 @@ def cta(key, position, label):
             f'data-loading-text="Abrindo o WhatsApp…">{WA_ICON}{SPIN}<span class="cta-label">{E(label)}</span></a>')
 
 
+def faq_for(n):
+    return [
+        ("É grátis?", "Sim. Entrar e participar do grupo é 100% gratuito."),
+        ("Quantas mensagens vou receber?", "Depende das promoções do dia. Mandamos só o que vale a pena e, se preferir, você pode silenciar o grupo e conferir quando quiser."),
+        ("É seguro?", "Sim. Você entra pelo convite oficial do WhatsApp e não pedimos nenhum dado. Os links levam para as próprias lojas, onde a compra acontece normalmente. Nunca pedimos pagamento, senha ou código por mensagem."),
+        ("Como sair do grupo?", "Abra o grupo no WhatsApp, toque no nome dele e escolha “Sair do grupo”. Pronto, sem complicação."),
+        tuple(n["page"]["faqTopic"]),
+    ]
+
+
 def badge_logo(n):
     """Logo central no círculo com brilho. Logo quadrado (Sonar Pet) preenche o círculo; o horizontal (Sonar Ofertas) fica dentro."""
     logo = n.get("logo") or {}
@@ -116,7 +126,7 @@ def mini_footer(n):
     prefs = (' · <button type="button" class="link-btn" data-consent-open>Preferências de privacidade</button>'
              if SITE["metaPixelId"] else "")
     return f"""<footer class="mini-footer">
-  <p>Links de afiliado: podemos receber comissão, sem custo extra para você. Sem vínculo com {E(", ".join(SITE["stores"]))} ou WhatsApp.</p>
+  <p>Links de afiliado: podemos receber comissão, sem custo extra para você. Sem vínculo com as lojas ou o WhatsApp.</p>
   <p><a href="/">Outros grupos</a> · <a href="/privacidade">Privacidade</a>{prefs}</p>
 </footer>
 <script src="/config.js"></script>
@@ -128,11 +138,17 @@ def mini_footer(n):
 
 def niche_page(n):
     p, key = n["page"], n["key"]
-    schema = ld({"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
-                 "inLanguage": "pt-BR", "description": p["description"],
-                 "isPartOf": {"@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/"}})
+    faq = faq_for(n)
+    schema = ld([
+        {"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
+         "inLanguage": "pt-BR", "description": p["description"],
+         "isPartOf": {"@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/"}},
+        {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
+    ])
+    faq_html = "\n".join(f"    <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
     logo = n.get("logo") or {}
-    # Página única: tudo cabe numa tela do celular; só o "Como funciona" aberto pode pedir rolagem.
+    # Página única: tudo cabe numa tela do celular; só uma pergunta aberta pode pedir rolagem.
     return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"), f"t-{key} single")
             + topline(p.get("topline", n["brand"]))
             + f"""<main class="wrap stage">
@@ -141,18 +157,11 @@ def niche_page(n):
   <h1>{p["h1"]}</h1>
   {cta(key, "hero", "Entrar no grupo grátis")}
   <p class="pill"><span class="dot" aria-hidden="true"></span>Grátis, sem spam, saia quando quiser</p>
-  <!-- Aba recolhível nativa: fechada por padrão, abre e fecha a cada toque (sem JavaScript; o texto continua no HTML) -->
-  <details class="how">
-    <summary>Como funciona</summary>
-    <div class="how-body">
-      <ol class="steps">
-        <li>Toque em “Entrar no grupo grátis”.</li>
-        <li>O WhatsApp abre com o convite do grupo {E(n["groupName"])}. Toque em “Entrar”.</li>
-        <li>Pronto! {E(p["lead"])}</li>
-      </ol>
-      <p class="how-note">Você entra pelo convite oficial do WhatsApp e não pedimos nenhum dado. Para sair, é só tocar em “Sair do grupo”.</p>
-    </div>
-  </details>
+  <!-- Perguntas frequentes: cada uma abre e fecha a cada toque (<details> nativo, sem JavaScript; o texto continua no HTML) -->
+  <section class="faqs" aria-labelledby="faq-title">
+    <h2 id="faq-title">Perguntas frequentes</h2>
+{faq_html}
+  </section>
 </main>
 """ + mini_footer(n))
 
