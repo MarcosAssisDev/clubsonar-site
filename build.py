@@ -71,7 +71,7 @@ def topline(text, link=False):
     return f'<p class="topline">{inner}</p>\n'
 
 
-def footer(niche=None, links=True, close=""):
+def footer(niche=None, links=True):
     ig = (niche or {}).get("instagram") or SITE["contact"].get("instagram")
     email = SITE["contact"].get("email")
     contact = []
@@ -91,7 +91,7 @@ def footer(niche=None, links=True, close=""):
   <p>Não temos vínculo com {E(stores)} nem com o WhatsApp. As marcas citadas pertencem aos seus donos.</p>
   {"<p>Contato: " + " · ".join(contact) + "</p>" if contact else ""}
 </div></footer>
-{close}<script src="/config.js{V}"></script>
+<script src="/config.js{V}"></script>
 <script src="/tracking.js{V}"></script>
 </body>
 </html>
@@ -107,53 +107,31 @@ def cta(key, position, label):
             f'data-loading-text="Abrindo o WhatsApp…">{WA_ICON}{SPIN}<span class="cta-label">{E(label)}</span></a>')
 
 
-def faq_for(n):
-    return [
-        ("É grátis?", "Sim. Entrar e participar do grupo é 100% gratuito."),
-        ("Quantas mensagens vou receber?", "Depende das promoções do dia. Mandamos só o que vale a pena e, se preferir, você pode silenciar o grupo e conferir quando quiser."),
-        ("É seguro?", "Sim. Você entra pelo convite oficial do WhatsApp e não pedimos nenhum dado. Os links levam para as próprias lojas, onde a compra acontece normalmente. Nunca pedimos pagamento, senha ou código por mensagem."),
-        tuple(n["page"]["faqTopic"]),
-    ]
-
-
 def badge_logo(n):
     """Logo central no círculo com brilho. Logo quadrado (Sonar Pet) preenche o círculo; o horizontal (Sonar Ofertas) fica dentro."""
     logo = n.get("logo") or {}
     if logo.get("hero"):
-        return f'<div class="badge-logo"><img src="{logo["hero"]}" alt="{E(n["brand"])}" width="148" height="148" fetchpriority="high"></div>'
-    return '<div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div>'
+        return f'<div class="logo-ring"><div class="badge-logo"><img src="{logo["hero"]}" alt="{E(n["brand"])}" width="148" height="148" fetchpriority="high"></div></div>'
+    return '<div class="logo-ring"><div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div></div>'
 
 
 def niche_page(n):
     p, key = n["page"], n["key"]
-    faq = faq_for(n)
-    schema = ld([
-        {"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
-         "inLanguage": "pt-BR", "description": p["description"],
-         "isPartOf": {"@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/"}},
-        {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
-            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
-    ])
-    faq_html = "\n".join(f"    <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
+    schema = ld({"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
+                 "inLanguage": "pt-BR", "description": p["description"],
+                 "isPartOf": {"@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/"}})
     logo = n.get("logo") or {}
-    # Página única: tudo cabe numa tela do celular; só uma pergunta aberta pode pedir rolagem.
+    # Página única e limpa: logo, frase, botão e selo no centro da tela; rodapé numa caixa no fim da tela.
     return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"), f"t-{key} single")
             + topline(p.get("topline", n["brand"]))
-            # .screen centraliza conteúdo + rodapé juntos na tela (sem vão grande em telas altas)
-            + f"""<div class="screen">
-<main class="wrap stage">
+            + f"""<main class="wrap stage">
   {badge_logo(n)}
   <span class="glow-line" aria-hidden="true"></span>
   <h1>{p["h1"]}</h1>
   {cta(key, "hero", "Entrar no grupo grátis")}
   <p class="pill"><span class="dot" aria-hidden="true"></span>Grátis, sem spam, saia quando quiser</p>
-  <!-- Perguntas frequentes: cada uma abre e fecha a cada toque (<details> nativo, sem JavaScript; o texto continua no HTML) -->
-  <section class="faqs" aria-labelledby="faq-title">
-    <h2 id="faq-title">Perguntas frequentes</h2>
-{faq_html}
-  </section>
 </main>
-""" + footer(n, links=False, close="</div>\n"))
+""" + footer(n, links=False))
 
 
 def home_page():
@@ -176,7 +154,7 @@ def home_page():
             + topline("Grupos de ofertas no WhatsApp")
             + f"""<main class="wrap">
 <section class="stage home">
-  <div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div>
+  <div class="logo-ring"><div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div></div>
   <span class="glow-line" aria-hidden="true"></span>
   <h1>Escolha seu <span class="hl">grupo de ofertas</span></h1>
   <p class="sub">Grátis, sem spam, saia quando quiser.</p>
