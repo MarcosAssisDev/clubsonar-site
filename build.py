@@ -6,6 +6,7 @@ Gera: index.html, <nicho>/index.html, <nicho>/entrar/index.html, privacidade/ind
 Os arquivos gerados são versionados (o GitHub Pages serve o repositório como está).
 Para trocar o link de um grupo (ex.: #101 → #102), edite só o groupUrl no site.json e rode o build.
 """
+import hashlib
 import html
 import json
 import os
@@ -14,6 +15,10 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = json.load(open(os.path.join(ROOT, "site.json"), encoding="utf-8"))
 DOMAIN = SITE["domain"].rstrip("/")
 NICHES = [n for n in SITE["niches"] if n["active"]]
+# Versão dos arquivos estáticos (muda quando o CSS, o JS ou o site.json mudam): o navegador baixa a versão nova
+# em vez de usar a do cache depois de cada publicação.
+V = "?v=" + hashlib.sha1(b"".join(open(os.path.join(ROOT, f), "rb").read()
+                                  for f in ("assets/site.css", "tracking.js", "site.json"))).hexdigest()[:8]
 
 WA_ICON = ('<svg class="wa" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>')
 E = html.escape
@@ -50,7 +55,7 @@ def head(title, desc, path, og_desc=None, extra="", og_image="/assets/img/og.jpg
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#120c07">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css{V}">
 {extra}{cf_beacon()}</head>
 <body class="{theme}">
 """
@@ -86,8 +91,8 @@ def footer(niche=None, links=True):
   <p>Não temos vínculo com {E(stores)} nem com o WhatsApp. As marcas citadas pertencem aos seus donos.</p>
   {"<p>Contato: " + " · ".join(contact) + "</p>" if contact else ""}
 </div></footer>
-<script src="/config.js"></script>
-<script src="/tracking.js"></script>
+<script src="/config.js{V}"></script>
+<script src="/tracking.js{V}"></script>
 </body>
 </html>
 """
@@ -102,53 +107,32 @@ def cta(key, position, label):
             f'data-loading-text="Abrindo o WhatsApp…">{WA_ICON}{SPIN}<span class="cta-label">{E(label)}</span></a>')
 
 
-def faq_for(n):
-    return [
-        ("É grátis?", "Sim. Entrar e participar do grupo é 100% gratuito."),
-        ("Quantas mensagens vou receber?", "Depende das promoções do dia. Mandamos só o que vale a pena e, se preferir, você pode silenciar o grupo e conferir quando quiser."),
-        ("É seguro?", "Sim. Você entra pelo convite oficial do WhatsApp e não pedimos nenhum dado. Os links levam para as próprias lojas, onde a compra acontece normalmente. Nunca pedimos pagamento, senha ou código por mensagem."),
-        ("Como sair do grupo?", "Abra o grupo no WhatsApp, toque no nome dele e escolha “Sair do grupo”. Pronto, sem complicação."),
-        tuple(n["page"]["faqTopic"]),
-    ]
-
-
 def badge_logo(n):
     """Logo central no círculo com brilho. Logo quadrado (Sonar Pet) preenche o círculo; o horizontal (Sonar Ofertas) fica dentro."""
     logo = n.get("logo") or {}
     if logo.get("hero"):
-        return f'<div class="badge-logo"><img src="{logo["hero"]}" alt="{E(n["brand"])}" width="148" height="148" fetchpriority="high"></div>'
-    return '<div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div>'
+        return f'<div class="logo-ring"><div class="badge-logo"><img src="{logo["hero"]}" alt="{E(n["brand"])}" width="148" height="148" fetchpriority="high"></div></div>'
+    return '<div class="logo-ring"><div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div></div>'
 
 
-def mini_footer(n):
-    """Rodapé de uma linha das páginas de grupo (página única, sem rolagem).
-    Mantém o checklist do guia: aviso de afiliado, não-vínculo com lojas/WhatsApp e privacidade (o contato está na política)."""
-    prefs = (' · <button type="button" class="link-btn" data-consent-open>Preferências de privacidade</button>'
-             if SITE["metaPixelId"] else "")
-    return f"""<footer class="mini-footer">
-  <p>Links de afiliado: podemos receber comissão, sem custo extra para você. Sem vínculo com as lojas ou o WhatsApp.</p>
-  <p><a href="/">Outros grupos</a> · <a href="/privacidade">Privacidade</a>{prefs}</p>
-</footer>
-<script src="/config.js"></script>
-<script src="/tracking.js"></script>
+def niche_footer():
+    """Sem rodapé nas páginas de grupo: só um link discreto para a /privacidade (LGPD), que traz o
+    aviso de afiliado, o não-vínculo com as lojas, o contato e as preferências de privacidade."""
+    return """<a class="priv-link" href="/privacidade">Privacidade</a>
+<script src="/config.js{V}"></script>
+<script src="/tracking.js{V}"></script>
 </body>
 </html>
-"""
+""".replace("{V}", V)
 
 
 def niche_page(n):
     p, key = n["page"], n["key"]
-    faq = faq_for(n)
-    schema = ld([
-        {"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
-         "inLanguage": "pt-BR", "description": p["description"],
-         "isPartOf": {"@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/"}},
-        {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
-            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
-    ])
-    faq_html = "\n".join(f"    <details class=\"faq\"><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in faq)
+    schema = ld({"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
+                 "inLanguage": "pt-BR", "description": p["description"],
+                 "isPartOf": {"@type": "WebSite", "name": SITE["siteName"], "url": DOMAIN + "/"}})
     logo = n.get("logo") or {}
-    # Página única: tudo cabe numa tela do celular; só uma pergunta aberta pode pedir rolagem.
+    # Página única e limpa: logo, frase, botão e selo no centro da tela; rodapé numa caixa no fim da tela.
     return (head(p["title"], p["description"], f"/{key}", p["ogDescription"], schema, logo.get("og", "/assets/img/og.jpg"), f"t-{key} single")
             + topline(p.get("topline", n["brand"]))
             + f"""<main class="wrap stage">
@@ -157,13 +141,8 @@ def niche_page(n):
   <h1>{p["h1"]}</h1>
   {cta(key, "hero", "Entrar no grupo grátis")}
   <p class="pill"><span class="dot" aria-hidden="true"></span>Grátis, sem spam, saia quando quiser</p>
-  <!-- Perguntas frequentes: cada uma abre e fecha a cada toque (<details> nativo, sem JavaScript; o texto continua no HTML) -->
-  <section class="faqs" aria-labelledby="faq-title">
-    <h2 id="faq-title">Perguntas frequentes</h2>
-{faq_html}
-  </section>
 </main>
-""" + mini_footer(n))
+""" + niche_footer())
 
 
 def home_page():
@@ -186,7 +165,7 @@ def home_page():
             + topline("Grupos de ofertas no WhatsApp")
             + f"""<main class="wrap">
 <section class="stage home">
-  <div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div>
+  <div class="logo-ring"><div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div></div>
   <span class="glow-line" aria-hidden="true"></span>
   <h1>Escolha seu <span class="hl">grupo de ofertas</span></h1>
   <p class="sub">Grátis, sem spam, saia quando quiser.</p>
@@ -209,7 +188,7 @@ def enter_page(n):
 <meta name="robots" content="noindex">
 <title>Abrindo o grupo no WhatsApp…</title>
 <meta http-equiv="refresh" content="{3 if SITE.get("cfAnalyticsToken") else 0}; url={url}">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css{V}">
 {cf_beacon()}<script>
   // Espera o analytics carregar para a visita a /entrar contar como clique no botão; o refresh acima é o plano B.
   var go = function () {{ location.replace({json.dumps(n["groupUrl"])}); }};
@@ -237,7 +216,12 @@ def privacy_page():
             + topline("← Club Sonar · Grupos de ofertas", link=True)
             + f"""<main class="wrap prose">
   <h1>Política de Privacidade</h1>
-  <p>Última atualização: 7 de outubro de 2026.</p>
+  <p>Última atualização: 11 de outubro de 2026.</p>
+
+  <h2 id="avisos">Avisos</h2>
+  <p><strong>Aviso de afiliado:</strong> alguns links dos nossos grupos são de afiliado. Podemos receber comissão pelas compras, sem custo extra para você. Preços e estoque podem mudar a qualquer momento.</p>
+  <p>Não temos vínculo com {E(", ".join(SITE["stores"]))} nem com o WhatsApp. As marcas citadas pertencem aos seus donos.</p>
+  {'<p><button type="button" class="pref-btn" data-consent-open>Preferências de privacidade</button></p>' if SITE["metaPixelId"] else ""}
   <p>O Club Sonar mantém este site para apresentar seus grupos gratuitos de ofertas no WhatsApp. Esta política explica, de acordo com a Lei Geral de Proteção de Dados (Lei 13.709/2018), quais dados tratamos e por quê.</p>
 
   <h2>1. Dados que coletamos</h2>
@@ -247,7 +231,7 @@ def privacy_page():
     <li><strong>Registros técnicos do servidor</strong> (como IP e navegador), mantidos pelo provedor de hospedagem para segurança e funcionamento do site.</li>
   </ul>
   <p><strong>Estatísticas de visita:</strong> usamos o Cloudflare Web Analytics para contar visitas e cliques de forma agregada (páginas vistas, origem e tipo de aparelho). Ele não usa cookies, não guarda dados no seu navegador e não identifica você.</p>
-  <p><strong>Pixel da Meta:</strong> usamos o Pixel da Meta (Facebook e Instagram) para medir a eficácia dos nossos anúncios. Ele coleta dados de navegação, como as páginas visitadas e os cliques nos botões de entrada no grupo, e os envia à Meta, que os trata conforme a política dela. Tratamos esses dados conforme a LGPD e você pode limitar esse rastreamento nas configurações de anúncios da sua conta da Meta ou nas configurações de privacidade do seu navegador. O Pixel só é ativado se você aceitar no aviso de cookies, e você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no rodapé do site. A Meta pode tratar esses dados fora do Brasil.</p>
+  <p><strong>Pixel da Meta:</strong> usamos o Pixel da Meta (Facebook e Instagram) para medir a eficácia dos nossos anúncios. Ele coleta dados de navegação, como as páginas visitadas e os cliques nos botões de entrada no grupo, e os envia à Meta, que os trata conforme a política dela. Tratamos esses dados conforme a LGPD e você pode limitar esse rastreamento nas configurações de anúncios da sua conta da Meta ou nas configurações de privacidade do seu navegador. O Pixel só é ativado se você aceitar no aviso de cookies, e você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no topo desta página. A Meta pode tratar esses dados fora do Brasil.</p>
 
   <h2>2. Grupo no WhatsApp</h2>
   <p>Ao entrar em um grupo, o WhatsApp (Meta) trata seus dados conforme a política dele. Seu número e nome de perfil ficam visíveis para os administradores e, conforme a configuração do grupo, para outros participantes. Não usamos seu número para outra finalidade e você pode sair do grupo quando quiser.</p>
