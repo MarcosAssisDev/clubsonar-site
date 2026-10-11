@@ -87,6 +87,14 @@ h1 { font-size:clamp(22px, 6.2vw, 30px); line-height:1.25; margin:0 0 24px; max-
 .single .site-footer p { margin:4px 0; }
 .single .site-footer nav { font-size:12px; gap:0 14px; }
 .single .site-footer nav a, .single .site-footer .link-btn { min-height:32px; }
+/* Rodapé limpo: botão Home, e-mail e link pequeno de privacidade */
+.site-footer.clean nav { align-items:center; gap:6px 16px; font-size:13px; }
+.site-footer.clean .home-btn { min-height:36px; padding:0 16px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.04); }
+.site-footer.clean .home-btn:hover { text-decoration:none; border-color:rgba(var(--glow),.7); }
+.site-footer.clean p { margin:2px 0 0; }
+.site-footer.clean .small { color:var(--muted); font-size:11px; font-weight:400; text-decoration:underline; }
+.pref-btn { -webkit-appearance:none; appearance:none; min-height:44px; padding:0 16px; border:1px solid var(--line); border-radius:12px;
+            background:transparent; color:var(--ink); font:inherit; font-weight:600; cursor:pointer; }
 /* Telas baixas (ex.: 360×640): logo e espaços menores para não precisar rolar */
 @media (max-height:720px) {
   .single .topline { padding:8px 16px; }

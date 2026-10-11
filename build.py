@@ -115,6 +115,22 @@ def badge_logo(n):
     return '<div class="logo-ring"><div class="badge-logo wide"><img src="/assets/img/logo.webp" alt="Sonar Ofertas" width="124" height="45" fetchpriority="high"></div></div>'
 
 
+def niche_footer():
+    """Rodapé limpo das páginas de grupo: Home, e-mail e um link pequeno para privacidade e avisos.
+    O aviso de afiliado, o não-vínculo e as preferências de privacidade ficam no topo da /privacidade."""
+    email = SITE["contact"].get("email")
+    mail = f'<a href="mailto:{E(email)}">{E(email)}</a>' if email else ""
+    return f"""<footer class="site-footer clean"><div class="wrap">
+  <nav aria-label="Rodapé"><a class="home-btn" href="/">Home</a>{mail}</nav>
+  <p><a class="small" href="/privacidade">Privacidade e avisos</a></p>
+</div></footer>
+<script src="/config.js{V}"></script>
+<script src="/tracking.js{V}"></script>
+</body>
+</html>
+"""
+
+
 def niche_page(n):
     p, key = n["page"], n["key"]
     schema = ld({"@context": "https://schema.org", "@type": "WebPage", "name": p["title"], "url": f"{DOMAIN}/{key}",
@@ -131,7 +147,7 @@ def niche_page(n):
   {cta(key, "hero", "Entrar no grupo grátis")}
   <p class="pill"><span class="dot" aria-hidden="true"></span>Grátis, sem spam, saia quando quiser</p>
 </main>
-""" + footer(n, links=False))
+""" + niche_footer())
 
 
 def home_page():
@@ -205,7 +221,12 @@ def privacy_page():
             + topline("← Club Sonar · Grupos de ofertas", link=True)
             + f"""<main class="wrap prose">
   <h1>Política de Privacidade</h1>
-  <p>Última atualização: 7 de outubro de 2026.</p>
+  <p>Última atualização: 11 de outubro de 2026.</p>
+
+  <h2 id="avisos">Avisos</h2>
+  <p><strong>Aviso de afiliado:</strong> alguns links dos nossos grupos são de afiliado. Podemos receber comissão pelas compras, sem custo extra para você. Preços e estoque podem mudar a qualquer momento.</p>
+  <p>Não temos vínculo com {E(", ".join(SITE["stores"]))} nem com o WhatsApp. As marcas citadas pertencem aos seus donos.</p>
+  {'<p><button type="button" class="pref-btn" data-consent-open>Preferências de privacidade</button></p>' if SITE["metaPixelId"] else ""}
   <p>O Club Sonar mantém este site para apresentar seus grupos gratuitos de ofertas no WhatsApp. Esta política explica, de acordo com a Lei Geral de Proteção de Dados (Lei 13.709/2018), quais dados tratamos e por quê.</p>
 
   <h2>1. Dados que coletamos</h2>
@@ -215,7 +236,7 @@ def privacy_page():
     <li><strong>Registros técnicos do servidor</strong> (como IP e navegador), mantidos pelo provedor de hospedagem para segurança e funcionamento do site.</li>
   </ul>
   <p><strong>Estatísticas de visita:</strong> usamos o Cloudflare Web Analytics para contar visitas e cliques de forma agregada (páginas vistas, origem e tipo de aparelho). Ele não usa cookies, não guarda dados no seu navegador e não identifica você.</p>
-  <p><strong>Pixel da Meta:</strong> usamos o Pixel da Meta (Facebook e Instagram) para medir a eficácia dos nossos anúncios. Ele coleta dados de navegação, como as páginas visitadas e os cliques nos botões de entrada no grupo, e os envia à Meta, que os trata conforme a política dela. Tratamos esses dados conforme a LGPD e você pode limitar esse rastreamento nas configurações de anúncios da sua conta da Meta ou nas configurações de privacidade do seu navegador. O Pixel só é ativado se você aceitar no aviso de cookies, e você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no rodapé do site. A Meta pode tratar esses dados fora do Brasil.</p>
+  <p><strong>Pixel da Meta:</strong> usamos o Pixel da Meta (Facebook e Instagram) para medir a eficácia dos nossos anúncios. Ele coleta dados de navegação, como as páginas visitadas e os cliques nos botões de entrada no grupo, e os envia à Meta, que os trata conforme a política dela. Tratamos esses dados conforme a LGPD e você pode limitar esse rastreamento nas configurações de anúncios da sua conta da Meta ou nas configurações de privacidade do seu navegador. O Pixel só é ativado se você aceitar no aviso de cookies, e você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no topo desta página. A Meta pode tratar esses dados fora do Brasil.</p>
 
   <h2>2. Grupo no WhatsApp</h2>
   <p>Ao entrar em um grupo, o WhatsApp (Meta) trata seus dados conforme a política dele. Seu número e nome de perfil ficam visíveis para os administradores e, conforme a configuração do grupo, para outros participantes. Não usamos seu número para outra finalidade e você pode sair do grupo quando quiser.</p>
