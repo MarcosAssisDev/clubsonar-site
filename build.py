@@ -2,7 +2,7 @@
 """Gera o site estático a partir do site.json.
 
 Uso:  python3 build.py
-Gera: index.html, <nicho>/index.html, <nicho>/entrar/index.html, privacidade/index.html e config.js.
+Gera: index.html, <nicho>/index.html, <nicho>/entrar/index.html, privacidade/index.html, exclusao-de-dados/index.html e config.js.
 Os arquivos gerados são versionados (o GitHub Pages serve o repositório como está).
 Para trocar o link de um grupo (ex.: #101 → #102), edite só o groupUrl no site.json e rode o build.
 """
@@ -216,7 +216,7 @@ def privacy_page():
             + topline("← Club Sonar · Grupos de ofertas", link=True)
             + f"""<main class="wrap prose">
   <h1>Política de Privacidade</h1>
-  <p>Última atualização: 11 de outubro de 2026.</p>
+  <p>Última atualização: 21 de outubro de 2026.</p>
 
   <h2 id="avisos">Avisos</h2>
   <p><strong>Aviso de afiliado:</strong> alguns links dos nossos grupos são de afiliado. Podemos receber comissão pelas compras, sem custo extra para você. Preços e estoque podem mudar a qualquer momento.</p>
@@ -233,17 +233,56 @@ def privacy_page():
   <p><strong>Estatísticas de visita:</strong> usamos o Cloudflare Web Analytics para contar visitas e cliques de forma agregada (páginas vistas, origem e tipo de aparelho). Ele não usa cookies, não guarda dados no seu navegador e não identifica você.</p>
   <p><strong>Pixel da Meta:</strong> usamos o Pixel da Meta (Facebook e Instagram) para medir a eficácia dos nossos anúncios. Ele coleta dados de navegação, como as páginas visitadas e os cliques nos botões de entrada no grupo, e os envia à Meta, que os trata conforme a política dela. Tratamos esses dados conforme a LGPD e você pode limitar esse rastreamento nas configurações de anúncios da sua conta da Meta ou nas configurações de privacidade do seu navegador. O Pixel só é ativado se você aceitar no aviso de cookies, e você pode mudar sua escolha a qualquer momento em “Preferências de privacidade”, no topo desta página. A Meta pode tratar esses dados fora do Brasil.</p>
 
-  <h2>2. Grupo no WhatsApp</h2>
+  <h2>2. Instagram: comentários e mensagens</h2>
+  <p>Quando você comenta em uma publicação dos nossos perfis no Instagram (como o @sonar_pet), usamos um sistema automatizado, operado por nós, para responder ao comentário e enviar uma mensagem direta apresentando o nosso grupo de ofertas e perguntando se você quer conhecê-lo. Se você responder, enviamos o link do grupo.</p>
+  <p><strong>Dados tratados:</strong> o texto do seu comentário, seu nome de usuário público e o identificador da sua conta no Instagram, o horário, a publicação comentada e o histórico das mensagens trocadas com o nosso atendimento automático.</p>
+  <p><strong>Finalidade e base legal:</strong> atender o seu comentário e entregar o link do grupo que você demonstrou interesse em conhecer (execução de procedimentos preliminares a pedido do titular e legítimo interesse, na forma da LGPD). Não usamos esses dados para outra finalidade.</p>
+  <p><strong>Inteligência artificial:</strong> o texto do seu comentário pode ser enviado a um provedor de inteligência artificial para redigir a resposta pública. Pedimos que a resposta não inclua dados pessoais, e uma pessoa da nossa equipe pode revisar as respostas antes da publicação.</p>
+  <p><strong>Com quem compartilhamos:</strong> a Meta (dona do Instagram), que intermedeia as mensagens e trata os dados conforme a política dela, e o provedor de inteligência artificial citado acima. Não vendemos esses dados.</p>
+  <p><strong>Por quanto tempo:</strong> guardamos esses registros pelo tempo necessário para operar o atendimento e a segurança do sistema, e os apagamos quando você pedir. Para deixar de receber mensagens, responda “parar” a qualquer mensagem nossa. Para pedir a exclusão, veja a página <a href="/exclusao-de-dados">Exclusão de dados</a>.</p>
+
+  <h2>3. Grupo no WhatsApp</h2>
   <p>Ao entrar em um grupo, o WhatsApp (Meta) trata seus dados conforme a política dele. Seu número e nome de perfil ficam visíveis para os administradores e, conforme a configuração do grupo, para outros participantes. Não usamos seu número para outra finalidade e você pode sair do grupo quando quiser.</p>
 
-  <h2>3. Links de afiliado</h2>
+  <h2>4. Links de afiliado</h2>
   <p>Ao clicar em uma oferta, você vai para o site da loja, que pode usar cookies próprios para identificar a indicação e calcular nossa comissão, sem custo extra para você. Esse tratamento segue a política de privacidade de cada loja.</p>
 
-  <h2>4. Compartilhamento</h2>
-  <p>Não vendemos nem compartilhamos dados pessoais, exceto com os provedores citados acima, que são necessários para o site e os grupos funcionarem.</p>
+  <h2>5. Compartilhamento</h2>
+  <p>Não vendemos nem compartilhamos dados pessoais, exceto com os provedores citados acima (hospedagem, estatísticas, Meta e o provedor de inteligência artificial), que são necessários para o site, o atendimento no Instagram e os grupos funcionarem.</p>
 
-  <h2>5. Seus direitos</h2>
-  <p>Você pode pedir acesso, correção ou exclusão de dados e tirar dúvidas sobre esta política {contact}.</p>
+  <h2>6. Seus direitos</h2>
+  <p>Você pode pedir acesso, correção ou exclusão de dados e tirar dúvidas sobre esta política {contact}. Passo a passo para pedir a exclusão: <a href="/exclusao-de-dados">Exclusão de dados</a>.</p>
+</main>
+""" + footer())
+
+
+def deletion_page():
+    email = SITE["contact"].get("email")
+    mail = (f'<a href="mailto:{E(email)}?subject=Exclus%C3%A3o%20de%20dados">{E(email)}</a>' if email
+            else "o nosso e-mail de contato")
+    return (head("Exclusão de dados · Club Sonar",
+                 "Como pedir a exclusão dos seus dados tratados pelo Club Sonar, incluindo comentários e mensagens no Instagram.",
+                 "/exclusao-de-dados")
+            + topline("← Club Sonar · Grupos de ofertas", link=True)
+            + f"""<main class="wrap prose">
+  <h1>Exclusão de dados</h1>
+  <p>Última atualização: 21 de outubro de 2026.</p>
+  <p>Se você comentou em uma publicação dos nossos perfis no Instagram (como o @sonar_pet) ou conversou com o nosso atendimento automático, e quer que apaguemos os seus dados, siga os passos abaixo.</p>
+
+  <h2>Como pedir</h2>
+  <ol>
+    <li>Envie um e-mail para {mail} com o assunto “Exclusão de dados”, informando o seu nome de usuário no Instagram (o @). Se tiver, inclua o link do comentário.</li>
+    <li>Para evitar que outra pessoa apague os seus dados, podemos pedir que você confirme o pedido por mensagem direta, a partir da própria conta do Instagram.</li>
+    <li>Apagamos os registros (comentários, nome de usuário, identificador da conta e histórico de mensagens do atendimento) em até 15 dias e respondemos confirmando.</li>
+  </ol>
+
+  <h2>Deixar de receber mensagens</h2>
+  <p>Responda “parar” a qualquer mensagem nossa no Instagram e não enviaremos mais nada.</p>
+
+  <h2>Dados que ficam com a Meta</h2>
+  <p>Comentários e mensagens também ficam guardados pela Meta, dona do Instagram e do WhatsApp. Para apagá-los lá, use as configurações da sua conta ou a política de privacidade da Meta.</p>
+
+  <p>Mais detalhes sobre como tratamos dados estão na <a href="/privacidade">Política de Privacidade</a>.</p>
 </main>
 """ + footer())
 
@@ -270,6 +309,7 @@ def write(rel, content):
 if __name__ == "__main__":
     write("index.html", home_page())
     write("privacidade/index.html", privacy_page())
+    write("exclusao-de-dados/index.html", deletion_page())
     write("config.js", config_js())
     for n in NICHES:
         write(f"{n['key']}/index.html", niche_page(n))
